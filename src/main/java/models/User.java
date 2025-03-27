@@ -12,6 +12,8 @@ import java.time.LocalDate;
 
 @Data
 @Entity
+@Setter
+@Getter
 @Table(name="users")
 public class User {
     @Id
@@ -29,6 +31,9 @@ public class User {
 
     public void setPassword(String password){
         this.password = password;
+    }
+    public String getPassword(){
+        return password;
     }
     @Column(nullable = false,unique = true)
     private String email;
