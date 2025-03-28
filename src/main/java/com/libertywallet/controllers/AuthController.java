@@ -33,8 +33,7 @@ public class AuthController {
         String email = request.get("email");
         String password = request.get("password");
         //BadRequestBody стоит ли добавлять?
-        String encodepassword = passwordEncoder.encode(password);
-        userService.userRegister(username,email,encodepassword);
+        userService.userRegister(email, password, username);
         return ResponseEntity.ok("User is sign up!");
     }
 
