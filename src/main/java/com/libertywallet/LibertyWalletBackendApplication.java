@@ -1,4 +1,4 @@
-package Liberty.Wallet.Project.Liberty.Wallet.Backend;
+package com.libertywallet;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

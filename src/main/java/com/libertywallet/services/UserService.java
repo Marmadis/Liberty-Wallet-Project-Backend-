@@ -1,11 +1,10 @@
-package services;
+package com.libertywallet.services;
 
 
-import lombok.AllArgsConstructor;
-import models.User;
+import com.libertywallet.models.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import repositories.UserRepository;
+import com.libertywallet.repositories.UserRepository;
 
 import java.util.Optional;
 

@@ -1,6 +1,6 @@
-package repositories;
+package com.libertywallet.repositories;
 
-import models.User;
+import com.libertywallet.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 

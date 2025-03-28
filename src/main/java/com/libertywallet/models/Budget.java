@@ -1,4 +1,4 @@
-package models;
+package com.libertywallet.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -20,6 +20,7 @@ public class Budget {
     @ManyToOne
     @JoinColumn(name = "category_id",nullable = false)
     private Category category;
+
 
     @Column(nullable = false)
     private int amountLimit;

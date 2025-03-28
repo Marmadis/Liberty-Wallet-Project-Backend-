@@ -1,4 +1,4 @@
-package security;
+package com.libertywallet.security;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -10,7 +10,7 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    private final Key secretKey = Keys.hmacShaKeyFor("super_secret_key".getBytes());//Временно
+    private final Key secretKey = Keys.hmacShaKeyFor("I_sucked_and_they_fucked_me_very_long_super_secret_key".getBytes());//Временно
 
     public String generatedToken(String email){
         return Jwts.builder()

@@ -1,14 +1,13 @@
-package models;
+package com.libertywallet.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
-
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name="predictions")
-public class Prediction {
+@Table(name = "recommendations")
+public class Recommendation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -17,15 +16,15 @@ public class Prediction {
     @JoinColumn(name = "user_id",nullable = false)
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id",nullable = false)
-    private Category category;
-
+    @Lob
     @Column(nullable = false)
-    private int predictedAmount;
+    private String rec_text;
 
     @Column(nullable = false,updatable = false)
-    private LocalDate predictedData;
+    private LocalDateTime date_generated;
 
-
+    @PrePersist
+    protected void onCreate() {
+        this.date_generated = LocalDateTime.now();
+    }
 }

@@ -1,4 +1,4 @@
-package models;
+package com.libertywallet.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -25,4 +25,8 @@ public class Transaction {
     @ManyToOne
     @JoinColumn(name = "user_id",nullable = false)
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id",nullable = false )
+    private Category category;
 }

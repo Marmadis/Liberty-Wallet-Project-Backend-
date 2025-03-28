@@ -1,4 +1,4 @@
-package Liberty.Wallet.Project.Liberty.Wallet.Backend;
+package com.libertywallet;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
