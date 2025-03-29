@@ -11,8 +11,8 @@ import java.io.IOException;
 
 @Service
 public class ChatGptService {
-    private static final String API_URL = System.getenv("OPENAI_API_URL");
-    private static final String API_KEY = System.getenv("OPENAI_API_KEY");
+    private static final String API_URL = "MISSING";
+    private static final String API_KEY = "MISSING";
 
 
     private final OkHttpClient client = new OkHttpClient();
