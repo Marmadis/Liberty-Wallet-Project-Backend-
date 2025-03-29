@@ -30,6 +30,8 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.flywaydb:flyway-core")
 	implementation("org.projectlombok:lombok")
+	implementation("com.squareup.okhttp3:okhttp:4.10.0")
+	implementation ("com.fasterxml.jackson.core:jackson-databind:2.15.0")
 	implementation("org.flywaydb:flyway-database-postgresql")
 	compileOnly("org.projectlombok:lombok")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")

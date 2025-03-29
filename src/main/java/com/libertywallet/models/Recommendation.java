@@ -23,6 +23,10 @@ public class Recommendation {
     @Column(nullable = false,updatable = false)
     private LocalDateTime date_generated;
 
+    @ManyToOne
+    @JoinColumn(name = "chatGptApiUsage_id",nullable = false)
+    private ChatGptApiUsage chatGptApiUsage;
+
     @PrePersist
     protected void onCreate() {
         this.date_generated = LocalDateTime.now();

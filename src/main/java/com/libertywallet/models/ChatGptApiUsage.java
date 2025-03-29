@@ -2,7 +2,7 @@ package com.libertywallet.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
-
+import java.util.List;
 
 import java.time.LocalDate;
 
@@ -14,8 +14,6 @@ public class ChatGptApiUsage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private int tokenUsed;
 
     @ManyToOne
     @JoinColumn(name = "user_id",nullable = false)
@@ -23,6 +21,10 @@ public class ChatGptApiUsage {
 
     @Column(nullable = false)
     private LocalDate timestamp;
+
+    @OneToMany(mappedBy = "chatGptApiUsage", cascade = CascadeType.ALL)
+    private List<Recommendation> recommendationList;
+
 
     @PrePersist
     protected void onCreate(){
