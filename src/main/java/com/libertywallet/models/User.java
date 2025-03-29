@@ -23,24 +23,11 @@ public class User {
     @Column(nullable = false)
     private String username;
 
-    public void setUsername(String username){
-        this.username = username;
-    }
     @Column(nullable = false)
     private String password;
 
-    public void setPassword(String password){
-        this.password = password;
-    }
-    public String getPassword(){
-        return password;
-    }
     @Column(nullable = false,unique = true)
     private String email;
-
-    public void setEmail(String email){
-        this.email = email;
-    }
 
     @Column(nullable = false,updatable = false)
     private LocalDate createdAt;
