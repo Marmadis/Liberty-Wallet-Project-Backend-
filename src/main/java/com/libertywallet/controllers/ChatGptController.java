@@ -1,6 +1,7 @@
 package com.libertywallet.controllers;
 
 
+import com.libertywallet.exception.EmailNotFoundException;
 import com.libertywallet.models.ChatGptApiUsage;
 import com.libertywallet.models.Recommendation;
 import com.libertywallet.models.User;
@@ -9,6 +10,7 @@ import com.libertywallet.repositories.RecommendationRepository;
 import com.libertywallet.repositories.UserRepository;
 import com.libertywallet.services.ChatGptService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,7 +22,7 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
 
-
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/chat")
 public class ChatGptController {
@@ -40,27 +42,27 @@ public class ChatGptController {
 
     @PostMapping("/ask")
     public ResponseEntity<String> askChatGpt(@RequestBody Map<String,String> request){
-        try{
+
             String email = request.get("email");
             String message = request.get("message");
             Optional<User> optionalUser = userRepository.findByEmail(email);
-            if(!optionalUser.isPresent()){
-                throw new RuntimeException("User not found!");
-            }
-            User user = optionalUser.get();
+
+            User user = optionalUser.orElseThrow(() -> new EmailNotFoundException(email));
 
             String response = chatGptService.getResponse(message);
+            log.info("Get  ChatGPT response");
             ChatGptApiUsage chatGptApiUsage = new ChatGptApiUsage();
             chatGptApiUsage.setUser(user);
             apiUsageRepository.save(chatGptApiUsage);
+            log.info("Save ChatGPT response in DB");
 
             Recommendation recommendation = new Recommendation();
             recommendation.setChatGptApiUsage(chatGptApiUsage);
             recommendation.setRec_text(response);
             recommendationRepository.save(recommendation);
+            log.info("Save ChatGPT recommendation in DB");
             return ResponseEntity.ok(response);
-        } catch (IOException e) {
-            return ResponseEntity.internalServerError().body("ERROR message"+e.getMessage());
-        }
+
+
     }
 }

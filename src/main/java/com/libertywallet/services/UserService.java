@@ -2,12 +2,13 @@ package com.libertywallet.services;
 
 
 import com.libertywallet.models.User;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.libertywallet.repositories.UserRepository;
 
 import java.util.Optional;
-
+@Slf4j
 @Service
 public class UserService {
     private final UserRepository userRepository;
@@ -20,6 +21,7 @@ public class UserService {
 
     public User userRegister(String email,String password,String username){
         if(userRepository.findByEmail(email).isPresent()){
+            log.error("User already exist: {}",email);
             throw new RuntimeException("User already exist");
         }
         User user = new User();
