@@ -1,6 +1,8 @@
 package com.libertywallet.controllers;
 
+import com.libertywallet.exception.EmailNotFoundException;
 import com.libertywallet.models.User;
+import io.jsonwebtoken.io.IOException;
 import jakarta.security.auth.message.AuthException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,15 +35,15 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody Map<String,String> request) throws AuthException {
+    public ResponseEntity<String> register(@RequestBody Map<String,String> request)  {
         String username = request.get("username");
         String email = request.get("email");
         String password = request.get("password");
         log.info("Attempt to register user: {}", email);
         if(username.isBlank() || email.isBlank() || password.isBlank()
         || username == null || email == null || password == null){
-            log.warn("Email,username or password missing");
-            throw  new ResponseStatusException(HttpStatus.BAD_REQUEST,"Email,username or password missing");
+            log.warn("Email:{}",email+",username: {}",username+" or password missing:{}",password);
+            throw  new IllegalArgumentException("Email,username or password missing");
         }
         userService.userRegister(email, password, username);
         log.info("User successfully registered: {}",email);
@@ -49,19 +51,16 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody Map<String,String> request) throws AuthException{
+    public ResponseEntity<String> login(@RequestBody Map<String,String> request) {
         String email = request.get("email");
         String password = request.get("password");
         log.info("Attempt to login in");
         User user = userRepository.findByEmail(email)
-                .orElseThrow(()-> {
-                    log.warn("User not found!");
-                        return new ResponseStatusException(HttpStatus.BAD_REQUEST,"User not found!");
-                });
+                .orElseThrow(()-> new EmailNotFoundException(email));
 
         if(!passwordEncoder.matches(password,user.getPassword())){
             log.warn("Invalid password",email);
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"Invalid password");
+            throw new IllegalArgumentException("Invalid password:"+email);
         }
         String token = jwtUtil.generatedToken(email);
         log.info("User successfully sign in");

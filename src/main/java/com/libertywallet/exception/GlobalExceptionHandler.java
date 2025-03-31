@@ -52,6 +52,11 @@ public class GlobalExceptionHandler {
           return new ResponseEntity<>("Invalid input"+e.getMessage(),HttpStatus.BAD_REQUEST);
         }
 
+        @ExceptionHandler(AlreadyExistException.class)
+    public ResponseEntity<String> handleValueExistException(AlreadyExistException e){
+         log.error("Value already exist:"+e.getMessage());
+         return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }
 
 
 
