@@ -20,7 +20,8 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/api/v1/auth/register",
                                 "/api/v1/auth/login",
-                                "/api/v1/chat/ask"
+                                "/api/v1/chat/ask",
+                                "/api/statistics/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
