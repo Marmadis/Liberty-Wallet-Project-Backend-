@@ -9,16 +9,13 @@ import com.libertywallet.repositories.ApiUsageRepository;
 import com.libertywallet.repositories.RecommendationRepository;
 import com.libertywallet.repositories.UserRepository;
 import com.libertywallet.services.ChatGptService;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
 

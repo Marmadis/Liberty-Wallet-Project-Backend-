@@ -2,19 +2,14 @@ package com.libertywallet.controllers;
 
 import com.libertywallet.exception.EmailNotFoundException;
 import com.libertywallet.models.User;
-import io.jsonwebtoken.io.IOException;
-import jakarta.security.auth.message.AuthException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import com.libertywallet.repositories.UserRepository;
 import com.libertywallet.security.JwtUtil;
 import com.libertywallet.services.UserService;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Map;
 
