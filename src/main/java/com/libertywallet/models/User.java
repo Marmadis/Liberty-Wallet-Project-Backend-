@@ -8,8 +8,6 @@ import lombok.*;
 import java.util.List;
 import java.time.LocalDate;
 
-// Починить Setter/Getter.По какой-то причине Lombok не работает корректно
-
 @Data
 @Entity
 @Table(name="users")
@@ -27,11 +25,20 @@ public class User{
     @Column(nullable = false,unique = true)
     private String email;
 
+    @Lob
+    @Column
+    private byte[] avatar;
+
     @Column(nullable = false,updatable = false)
     private LocalDate createdAt;
 
+
+
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
-    private List<ChatGptApiUsage> chatGptApiUsageList;
+    private List<Recommendation> recommendationList;
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private List<UserFeedback> userFeedbackList;
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<Budget> budgetList;

@@ -33,11 +33,6 @@ public class GlobalExceptionHandler {
         }
 
 
-        @ExceptionHandler(ChatGptServiceException.class)
-    public ResponseEntity<String> handleGptServiceException(ChatGptServiceException e){
-            log.error("ChatGPT service error: {}",e.getMessage());
-            return new ResponseEntity<>("ChatGPT service error: "+e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
-        }
 
         @ExceptionHandler(IOException.class)
     public ResponseEntity<String> handleIOException(IOException e){
