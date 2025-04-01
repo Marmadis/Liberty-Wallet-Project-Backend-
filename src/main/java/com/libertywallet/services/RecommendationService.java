@@ -2,7 +2,6 @@ package com.libertywallet.services;
 
 
 import com.libertywallet.dto.RecommendationDTO;
-import com.libertywallet.dto.UserFeedbackDTO;
 import com.libertywallet.exception.NotFoundException;
 import com.libertywallet.models.Recommendation;
 import com.libertywallet.models.User;
@@ -73,7 +72,7 @@ public class RecommendationService {
     private RecommendationDTO convertToDTO(Recommendation recommendation) {
         RecommendationDTO dto = new RecommendationDTO();
         dto.setCategory(recommendation.getCategory());
-//        dto.setImage(recommendation.getImage());
+        dto.setImage(recommendation.getImage());
         dto.setText(recommendation.getText());
         return dto;
     }
