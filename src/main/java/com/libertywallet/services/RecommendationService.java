@@ -72,7 +72,7 @@ public class RecommendationService {
     private RecommendationDTO convertToDTO(Recommendation recommendation) {
         RecommendationDTO dto = new RecommendationDTO();
         dto.setCategory(recommendation.getCategory());
-        dto.setImage(recommendation.getImage());
+//        dto.setImage(recommendation.getImage());
         dto.setText(recommendation.getText());
         return dto;
     }
