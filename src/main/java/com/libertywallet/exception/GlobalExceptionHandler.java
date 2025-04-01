@@ -32,10 +32,10 @@ public class GlobalExceptionHandler {
             return new ResponseEntity<>("DataBase error: "+e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        @ExceptionHandler(UserNotFoundException.class)
-        public ResponseEntity<String> handleUserNotFoundException(UserNotFoundException e){
-         log.error("User not found: {}",e.getMessage());
-         return new ResponseEntity<>("User not found"+e.getMessage(),HttpStatus.NOT_FOUND);
+        @ExceptionHandler(NotFoundException.class)
+        public ResponseEntity<String> handleUserNotFoundException(NotFoundException e){
+         log.error("Not found: {}",e.getMessage());
+         return new ResponseEntity<>("Not found"+e.getMessage(),HttpStatus.NOT_FOUND);
         }
 
 

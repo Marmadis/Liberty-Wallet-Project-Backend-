@@ -29,6 +29,7 @@ public class User{
     @Column
     private byte[] avatar;
 
+
     @Column(nullable = false,updatable = false)
     private LocalDate createdAt;
 

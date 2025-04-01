@@ -10,5 +10,6 @@ import java.util.Optional;
 public interface UserFeedBackRepository  extends JpaRepository<UserFeedback ,Long> {
     Optional<UserFeedback> findByUserId(Long userId);
     List<UserFeedback> findByUserIdAndFavoriteTrue(Long userId);
+    List<UserFeedback> findByUserIdAndLikedTrue(Long userId);
 
 }
