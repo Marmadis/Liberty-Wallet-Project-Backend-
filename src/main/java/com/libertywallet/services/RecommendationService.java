@@ -2,6 +2,7 @@ package com.libertywallet.services;
 
 
 import com.libertywallet.dto.RecommendationDTO;
+import com.libertywallet.dto.UserFeedbackDTO;
 import com.libertywallet.exception.NotFoundException;
 import com.libertywallet.models.Recommendation;
 import com.libertywallet.models.User;
@@ -40,14 +41,25 @@ public class RecommendationService {
         return feedbackList;
     }
 
-    public List<UserFeedback> getLikedRecommendation(Long userId){
+    public List<UserFeedbackDTO> getLikedRecommendation(Long userId){
         List<UserFeedback> feedbackList = userFeedBackRepository.findByUserIdAndLikedTrue(userId);
         log.info("Finding user liked recommendations");
+
         if(feedbackList.isEmpty()){
             throw new NotFoundException("Liked recommendations not found (user id:"+userId+")");
         }
-        return feedbackList;
+
+        return feedbackList.stream().map(f -> {
+            UserFeedbackDTO dto = new UserFeedbackDTO();
+            dto.setId(f.getId());
+            dto.setUserId(f.getUser().getId());
+            dto.setRecommendationId(f.getRecommendation().getId());
+            dto.setLiked(f.getLiked());
+            dto.setFavorite(f.getFavorite());
+            return dto;
+        }).collect(Collectors.toList());
     }
+
 
     public List<RecommendationDTO> getPopularRecommendations(){
         Pageable pageable = PageRequest.of(0, 10);
@@ -61,7 +73,7 @@ public class RecommendationService {
     private RecommendationDTO convertToDTO(Recommendation recommendation) {
         RecommendationDTO dto = new RecommendationDTO();
         dto.setCategory(recommendation.getCategory());
-        dto.setImage(recommendation.getImage());
+//        dto.setImage(recommendation.getImage());
         dto.setText(recommendation.getText());
         return dto;
     }
@@ -82,6 +94,7 @@ public class RecommendationService {
         userFeedback.setRecommendation(recommendation);
         userFeedback.setLiked(liked);
         userFeedback.setFavorite(favorite);
+        userFeedBackRepository.save(userFeedback);
     }
 
 }

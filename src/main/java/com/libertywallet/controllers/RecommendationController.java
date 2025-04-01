@@ -2,6 +2,7 @@ package com.libertywallet.controllers;
 
 import com.libertywallet.dto.FeedBackRequest;
 import com.libertywallet.dto.RecommendationDTO;
+import com.libertywallet.dto.UserFeedbackDTO;
 import com.libertywallet.models.UserFeedback;
 import com.libertywallet.services.RecommendationService;
 import lombok.extern.slf4j.Slf4j;
@@ -26,8 +27,8 @@ public class RecommendationController {
     }
 
     @GetMapping("/liked_rec/{userId}")
-    public ResponseEntity<List<UserFeedback>> likedRecommendation(@PathVariable Long userId){
-        List<UserFeedback> likedRecList = recommendationService.getLikedRecommendation(userId);
+    public ResponseEntity<List<UserFeedbackDTO>> likedRecommendation(@PathVariable Long userId){
+        List<UserFeedbackDTO> likedRecList = recommendationService.getLikedRecommendation(userId);
         return ResponseEntity.ok(likedRecList);
     }
 

@@ -19,7 +19,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/api/v2/auth/register",
-                                "/api/v2/auth/login"
+                                "/api/v2/auth/login",
+                                "/api/v1/recommendation/feedback",
+                                "/api/v1/recommendation/popular",
+                                "/api/v1/recommendation/liked_rec/{userId}"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

@@ -9,8 +9,8 @@ public class RecommendationDTO {
 
     private String category;
 
-    @Lob
-    private byte[] image;
+//    @Lob
+//    private byte[] image;
 
     private String text;
 }
