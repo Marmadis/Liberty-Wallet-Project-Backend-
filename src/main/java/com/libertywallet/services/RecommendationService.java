@@ -82,6 +82,8 @@ public class RecommendationService {
         userFeedback.setRecommendation(recommendation);
         userFeedback.setLiked(liked);
         userFeedback.setFavorite(favorite);
+        log.info("Saving user feedback");
+        userFeedBackRepository.save(userFeedback);
     }
 
 }
