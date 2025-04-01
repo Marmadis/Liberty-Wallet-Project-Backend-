@@ -23,7 +23,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(EmailNotFoundException.class)
     public ResponseEntity<String> handleEmailNotFoundException(EmailNotFoundException e){
         log.error("Email not found: {}",e.getMessage());
-        return new ResponseEntity<>("User into email not found:"+e.getMessage(),HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("User into email not found:"+e.getMessage(),HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(DataAccessException.class)
@@ -32,6 +32,11 @@ public class GlobalExceptionHandler {
             return new ResponseEntity<>("DataBase error: "+e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
+        @ExceptionHandler(UserNotFoundException.class)
+        public ResponseEntity<String> handleUserNotFoundException(UserNotFoundException e){
+         log.error("User not found: {}",e.getMessage());
+         return new ResponseEntity<>("User not found"+e.getMessage(),HttpStatus.NOT_FOUND);
+        }
 
 
         @ExceptionHandler(IOException.class)

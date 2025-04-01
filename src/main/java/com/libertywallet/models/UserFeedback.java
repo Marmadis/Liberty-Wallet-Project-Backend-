@@ -25,4 +25,6 @@ public class UserFeedback {
     @Column(nullable = false)
     private boolean favorite;
 
+
+
 }

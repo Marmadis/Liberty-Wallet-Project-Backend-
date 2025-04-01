@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.libertywallet.repositories.UserRepository;
-import java.util.Optional;
 @Slf4j
 @Service
 public class UserService {
@@ -30,10 +29,5 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(password));
         return userRepository.save(user);
     }
-
-    public Optional<User> findByEmail(String email){
-        return userRepository.findByEmail(email);
-    }
-
 
 }

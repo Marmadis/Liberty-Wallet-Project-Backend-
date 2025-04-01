@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface RecommendationRepository extends JpaRepository<Recommendation,Long> {
     Optional<Recommendation> findById(Long id);
+    Optional<Recommendation> findByUserId(Long userId);
 }
