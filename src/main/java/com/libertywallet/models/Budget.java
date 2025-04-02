@@ -3,11 +3,14 @@ package com.libertywallet.models;
 import jakarta.persistence.*;
 import lombok.Data;
 
+
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Data
+
 @Entity
 @Table(name ="budgets")
+@Data
 public class Budget {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,10 +20,8 @@ public class Budget {
     @JoinColumn(name="user_id",nullable = false)
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id",nullable = false)
-    private Category category;
-
+    @Column
+    private BigDecimal current_balance;
 
     @Column(nullable = false)
     private int amountLimit;

@@ -14,6 +14,10 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id",nullable = true)
+    private User user;
+
     @Column(unique = true, nullable = false)
     private String name;
 
@@ -27,9 +31,6 @@ public class Category {
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<Transaction> transactionList;
-
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-    private List<Budget> budgetList;
 }
 
 

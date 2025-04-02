@@ -26,7 +26,6 @@ public class Recommendation {
     @Column(nullable = false)
     private byte[] image;
 
-
     @Column(nullable = false)
     private String text;
 

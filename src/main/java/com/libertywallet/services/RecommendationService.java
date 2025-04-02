@@ -2,6 +2,7 @@ package com.libertywallet.services;
 
 
 import com.libertywallet.dto.RecommendationDTO;
+import com.libertywallet.dto.UserFeedbackDTO;
 import com.libertywallet.exception.NotFoundException;
 import com.libertywallet.models.Recommendation;
 import com.libertywallet.models.User;
@@ -40,13 +41,25 @@ public class RecommendationService {
         return feedbackList;
     }
 
-    public List<UserFeedback> getLikedRecommendation(Long userId){
+    public List<UserFeedbackDTO> getLikedRecommendation(Long userId){
         List<UserFeedback> feedbackList = userFeedBackRepository.findByUserIdAndLikedTrue(userId);
         log.info("Finding user liked recommendations");
+
         if(feedbackList.isEmpty()){
             throw new NotFoundException("Liked recommendations not found (user id:"+userId+")");
         }
-        return feedbackList;
+
+        return feedbackList.stream().map(f -> {
+            UserFeedbackDTO dto = new UserFeedbackDTO();
+            dto.setId(f.getId());
+            dto.setUserId(f.getUser().getId());
+            dto.setRecommendationId(f.getRecommendation().getId());
+            dto.setLiked(f.getLiked());
+            dto.setFavorite(f.getFavorite());
+            dto.setRecommendationText(f.getRecommendation().getText());
+            dto.setRecommendationCategory(f.getRecommendation().getCategory());
+            return dto;
+        }).collect(Collectors.toList());
     }
 
     public List<RecommendationDTO> getPopularRecommendations(){
@@ -82,8 +95,6 @@ public class RecommendationService {
         userFeedback.setRecommendation(recommendation);
         userFeedback.setLiked(liked);
         userFeedback.setFavorite(favorite);
-        log.info("Saving user feedback");
-        userFeedBackRepository.save(userFeedback);
     }
 
 }

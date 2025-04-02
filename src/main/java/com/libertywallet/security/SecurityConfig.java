@@ -18,8 +18,11 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                "/api/v2/auth/register",
-                                "/api/v2/auth/login"
+                                "/auth/register",
+                                "/auth/login",
+                                "/recommendation/feedback",
+                                "/recommendation/popular",
+                                "/recommendation/liked_rec/{userId}"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )

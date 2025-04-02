@@ -21,9 +21,15 @@ public class UserFeedback {
 
     @Column(nullable = false)
     private boolean liked;
+    public boolean getLiked(){
+        return liked;
+    }
 
     @Column(nullable = false)
     private boolean favorite;
+    public boolean getFavorite(){
+        return favorite;
+    }
 
 
 

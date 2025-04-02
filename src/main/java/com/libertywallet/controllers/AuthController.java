@@ -15,13 +15,14 @@ import java.util.Map;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v2/auth")
+@RequestMapping("/auth")
 public class AuthController {
     private final UserService userService;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
-    @Autowired
+
+
     public AuthController(UserService userService, UserRepository userRepository, PasswordEncoder passwordEncoder,JwtUtil jwtUtil){
         this.userService = userService;
         this.userRepository = userRepository;

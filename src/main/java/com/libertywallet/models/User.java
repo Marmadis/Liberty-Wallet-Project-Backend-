@@ -50,6 +50,10 @@ public class User{
     @OneToMany(mappedBy = "user" ,cascade = CascadeType.ALL)
     private List<Prediction> predictionList;
 
+
+    @OneToMany(mappedBy = "user" ,cascade = CascadeType.ALL)
+    private List<Category> categoryList;
+
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDate.now();

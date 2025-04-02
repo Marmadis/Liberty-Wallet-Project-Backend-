@@ -3,6 +3,7 @@ package com.libertywallet.models;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
@@ -14,7 +15,7 @@ public class Transaction {
     private Long id;
 
     @Column(nullable = false)
-    private int amount;
+    private BigDecimal amount;
 
     @Column(nullable = false)
     private String description;
