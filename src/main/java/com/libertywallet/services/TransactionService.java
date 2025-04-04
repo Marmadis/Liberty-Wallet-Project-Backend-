@@ -20,7 +20,6 @@ import java.util.List;
 public class TransactionService {
     private final TransactionRepository transactionRepository;
     private final UserRepository userRepository;
-    public TransactionService(TransactionRepository transactionRepository,UserRepository userRepository){
         this.transactionRepository = transactionRepository;
         this.userRepository = userRepository;
     }
@@ -35,8 +34,6 @@ public class TransactionService {
         return  transactionList;
     }
 
-    public Transaction setTransaction(Long userId, BigDecimal amount,String description ,LocalDate date){
-        log.info("Creating new transaction info...");
         Transaction transaction = new Transaction();
         User user = userRepository.findById(userId)
                 .orElseThrow(() ->  new NotFoundException("User not found (user id:"+userId+")"));
@@ -44,7 +41,6 @@ public class TransactionService {
         transaction.setUser(user);
         transaction.setDescription(description);
         transaction.setDate(date);
-        log.info("Creating new transaction info was successfully");
         return transactionRepository.save(transaction);
     }
 }

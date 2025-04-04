@@ -24,7 +24,6 @@ public class CategoryController {
         return ResponseEntity.ok(categoryList);
     }
 
-    @GetMapping("/setcategory/{userId}")
     public ResponseEntity<String> setCategory(@PathVariable Long userId, @RequestBody CategoryRequest categoryRequest){
         categoryService.setCategory(
                 userId,
