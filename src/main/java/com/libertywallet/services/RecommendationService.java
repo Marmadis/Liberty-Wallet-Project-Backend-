@@ -10,6 +10,7 @@ import com.libertywallet.models.UserFeedback;
 import com.libertywallet.repositories.RecommendationRepository;
 import com.libertywallet.repositories.UserFeedBackRepository;
 import com.libertywallet.repositories.UserRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,17 +21,13 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class RecommendationService {
 
     private final RecommendationRepository recommendationRepository;
     private final UserFeedBackRepository userFeedBackRepository;
     private final UserRepository userRepository;
-    public RecommendationService(RecommendationRepository recommendationRepository, UserFeedBackRepository userFeedBackRepository, UserRepository userRepository){
-        this.recommendationRepository = recommendationRepository;
-        this.userFeedBackRepository = userFeedBackRepository;
-        this.userRepository = userRepository;
 
-    }
 
     public List<UserFeedback> getFavoriteRecommendation(Long userId){
         List<UserFeedback>  feedbackList = userFeedBackRepository.findByUserIdAndFavoriteTrue(userId);

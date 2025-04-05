@@ -9,6 +9,7 @@ import com.libertywallet.repositories.BudgetRepository;
 import com.libertywallet.repositories.CategoryRepository;
 import com.libertywallet.repositories.TransactionRepository;
 import com.libertywallet.repositories.UserRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,15 +20,12 @@ import java.util.List;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class TransactionService {
     private final TransactionRepository transactionRepository;
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
-    public TransactionService(TransactionRepository transactionRepository, UserRepository userRepository, CategoryRepository categoryRepository){
-        this.transactionRepository = transactionRepository;
-        this.userRepository = userRepository;
-        this.categoryRepository = categoryRepository;
-    }
+
 
     public List<Transaction> getAllTransaction(Long userId){
         log.info("Getting all transaction info");
@@ -39,7 +37,7 @@ public class TransactionService {
         return  transactionList;
     }
 
-    public Transaction setTransaction(Long userId, Long categoryId, BigDecimal amount,String description ,LocalDate date){
+    public Transaction createTransaction(Long userId, Long categoryId, BigDecimal amount,String description ,LocalDate date){
         log.info("Creating new transaction...");
         Transaction transaction = new Transaction();
         Category category = categoryRepository.findById(categoryId)

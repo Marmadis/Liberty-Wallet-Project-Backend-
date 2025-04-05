@@ -5,6 +5,7 @@ import com.libertywallet.dto.RecommendationDTO;
 import com.libertywallet.dto.UserFeedbackDTO;
 import com.libertywallet.models.UserFeedback;
 import com.libertywallet.services.RecommendationService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,13 +13,12 @@ import java.util.List;
 
 @RestController
 @Slf4j
+@RequiredArgsConstructor
 @RequestMapping("/recommendation")
 public class RecommendationController {
 
     public final RecommendationService recommendationService;
-    public RecommendationController(RecommendationService recommendationService){
-        this.recommendationService = recommendationService;
-    }
+
 
     @GetMapping("/favorite_rec/{userId}")
     public ResponseEntity<List<UserFeedback>> favoriteRecommendation(@PathVariable Long userId){

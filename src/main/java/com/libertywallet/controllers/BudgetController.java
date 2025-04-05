@@ -4,20 +4,18 @@ package com.libertywallet.controllers;
 import com.libertywallet.dto.BudgetRequest;
 import com.libertywallet.models.Budget;
 import com.libertywallet.services.BudgetService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/budget")
 public class BudgetController {
 
     private  final  BudgetService budgetService;
-
-    public BudgetController(BudgetService budgetService){
-        this.budgetService = budgetService;
-    }
 
     @GetMapping("/getinfo/{userId}")
     public ResponseEntity<Budget> getBudgetInfo(@PathVariable Long userId){
