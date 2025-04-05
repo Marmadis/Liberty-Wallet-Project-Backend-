@@ -4,12 +4,11 @@ package com.libertywallet.services;
 import com.libertywallet.exception.NotFoundException;
 import com.libertywallet.models.Transaction;
 import com.libertywallet.models.User;
-import com.libertywallet.repositories.BudgetRepository;
 import com.libertywallet.repositories.TransactionRepository;
 import com.libertywallet.repositories.UserRepository;
+import com.libertywallet.repositories.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
