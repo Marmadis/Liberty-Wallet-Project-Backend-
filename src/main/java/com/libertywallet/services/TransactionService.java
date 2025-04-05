@@ -4,9 +4,7 @@ package com.libertywallet.services;
 import com.libertywallet.exception.NotFoundException;
 import com.libertywallet.models.Transaction;
 import com.libertywallet.models.User;
-import com.libertywallet.models.Category;
 import com.libertywallet.repositories.BudgetRepository;
-import com.libertywallet.repositories.CategoryRepository;
 import com.libertywallet.repositories.TransactionRepository;
 import com.libertywallet.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -40,16 +38,12 @@ public class TransactionService {
     public Transaction createTransaction(Long userId, Long categoryId, BigDecimal amount,String description ,LocalDate date){
         log.info("Creating new transaction...");
         Transaction transaction = new Transaction();
-        Category category = categoryRepository.findById(categoryId)
-                .orElseThrow(() ->  new NotFoundException("Category not found (category id:"+categoryId+")"));
         User user = userRepository.findById(userId)
                 .orElseThrow(() ->  new NotFoundException("User not found (user id:"+userId+")"));
         transaction.setAmount(amount);
         transaction.setUser(user);
-        transaction.setCategory(category);
         transaction.setDescription(description);
         transaction.setDate(date);
-        log.info("Transaction created successfully");
         return transactionRepository.save(transaction);
     }
 }
