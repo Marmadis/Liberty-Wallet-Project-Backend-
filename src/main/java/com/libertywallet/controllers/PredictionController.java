@@ -1,22 +1,13 @@
 package com.libertywallet.controllers;
 
 
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
-@Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/predict")
 public class PredictionController {
 
-
-    @GetMapping("/get/{userId}")
-    public ResponseEntity<String> getPredict(@PathVariable Long userId){
-        Long id = userId;
-        return ResponseEntity.ok("Process");
-    }
 }
+

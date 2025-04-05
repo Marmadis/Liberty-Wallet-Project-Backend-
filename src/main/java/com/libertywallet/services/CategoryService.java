@@ -7,6 +7,7 @@ import com.libertywallet.models.CategoryType;
 import com.libertywallet.models.User;
 import com.libertywallet.repositories.CategoryRepository;
 import com.libertywallet.repositories.UserRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -14,17 +15,14 @@ import java.util.List;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
-    public CategoryService(CategoryRepository categoryRepository,UserRepository userRepository){
-        this.categoryRepository = categoryRepository;
-        this.userRepository = userRepository;
 
-    }
 
-    public Category setCategory(Long userId, CategoryType categoryType,String name){
+    public Category createCategory(Long userId, CategoryType categoryType,String name){
         log.info("Creating new category for user(ID): {}",userId);
         Category category = new Category();
         User user = userRepository.findById(userId)

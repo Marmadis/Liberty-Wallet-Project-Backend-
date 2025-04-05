@@ -2,8 +2,8 @@ package com.libertywallet.controllers;
 
 import com.libertywallet.exception.EmailNotFoundException;
 import com.libertywallet.models.User;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +15,7 @@ import java.util.Map;
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/auth")
 public class AuthController {
     private final UserService userService;
@@ -23,12 +24,6 @@ public class AuthController {
     private final JwtUtil jwtUtil;
 
 
-    public AuthController(UserService userService, UserRepository userRepository, PasswordEncoder passwordEncoder,JwtUtil jwtUtil){
-        this.userService = userService;
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtUtil = jwtUtil;
-    }
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody Map<String,String> request)  {

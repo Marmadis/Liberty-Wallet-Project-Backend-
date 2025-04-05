@@ -10,6 +10,7 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
+    //РЕШИТЬ ПРОБЛЕМУ С КЛЮЧОМ
     private final Key secretKey = Keys.hmacShaKeyFor("I_sucked_and_they_fucked_me_very_long_super_secret_key".getBytes());//Временно
 
     public String generatedToken(String email){

@@ -6,6 +6,7 @@ import com.libertywallet.models.Budget;
 import com.libertywallet.models.User;
 import com.libertywallet.repositories.BudgetRepository;
 import com.libertywallet.repositories.UserRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -14,14 +15,13 @@ import java.time.LocalDate;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
+
 public class BudgetService {
 
     private final UserRepository userRepository;
     private final BudgetRepository budgetRepository;
-    public BudgetService(BudgetRepository budgetRepository,UserRepository userRepository){
-        this.budgetRepository = budgetRepository;
-        this.userRepository = userRepository;
-    }
+
 
     public Budget getBudgetInformation(Long userId){
         log.info("Finding user budget information...");
@@ -31,7 +31,7 @@ public class BudgetService {
         return budgetInfo;
     }
 
-    public Budget setBudgetInformation(Long userId, int amountLimit, BigDecimal current_balance, LocalDate start,LocalDate end){
+    public Budget createBudgetInformation(Long userId, int amountLimit, BigDecimal current_balance, LocalDate start,LocalDate end){
         log.info("Setting new budget information");
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("User  not found (user id:"+userId+")"));
