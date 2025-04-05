@@ -22,7 +22,7 @@ public class CategoryService {
     private final UserRepository userRepository;
 
 
-    public Category setCategory(Long userId, CategoryType categoryType,String name){
+    public Category createCategory(Long userId, CategoryType categoryType,String name){
         log.info("Creating new category for user(ID): {}",userId);
         Category category = new Category();
         User user = userRepository.findById(userId)

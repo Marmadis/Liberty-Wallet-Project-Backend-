@@ -30,7 +30,7 @@ public class BudgetService {
         return budgetInfo;
     }
 
-    public Budget setBudgetInformation(Long userId, int amountLimit, BigDecimal current_balance, LocalDate start,LocalDate end){
+    public Budget createBudgetInformation(Long userId, int amountLimit, BigDecimal current_balance, LocalDate start,LocalDate end){
         log.info("Setting new budget information");
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("User  not found (user id:"+userId+")"));

@@ -17,15 +17,15 @@ public class BudgetController {
 
     private  final  BudgetService budgetService;
 
-    @GetMapping("/getinfo/{userId}")
+    @GetMapping("/get/{userId}")
     public ResponseEntity<Budget> getBudgetInfo(@PathVariable Long userId){
         log.info("User request budget info");
         return ResponseEntity.ok(budgetService.getBudgetInformation(userId));
     }
 
-    @PostMapping("/setinfo/{userId}")
-    public ResponseEntity<String> setBudgetInfo(@PathVariable Long userId, @RequestBody BudgetRequest budgetRequest){
-        budgetService.setBudgetInformation(
+    @PostMapping("/create/{userId}")
+    public ResponseEntity<String> createBudgetInfo(@PathVariable Long userId, @RequestBody BudgetRequest budgetRequest){
+        budgetService.createBudgetInformation(
                 userId,
                 budgetRequest.getAmountLimit(),
                 budgetRequest.getCurrent_balance(),

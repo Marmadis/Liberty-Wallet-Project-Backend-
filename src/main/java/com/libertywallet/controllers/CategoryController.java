@@ -18,15 +18,15 @@ public class CategoryController {
 
     private final CategoryService categoryService;
 
-    @GetMapping("/getcategory/{userId}")
+    @GetMapping("/get/{userId}")
     public ResponseEntity<List<Category>> getCategory(@PathVariable  Long userId){
         List<Category> categoryList = categoryService.getCategory(userId);
         return ResponseEntity.ok(categoryList);
     }
 
-    @PostMapping("/setcategory/{userId}")
-    public ResponseEntity<String> setCategory(@PathVariable Long userId, @RequestBody CategoryRequest categoryRequest){
-        categoryService.setCategory(
+    @PostMapping("/create/{userId}")
+    public ResponseEntity<String> createCategory(@PathVariable Long userId, @RequestBody CategoryRequest categoryRequest){
+        categoryService.createCategory(
                 userId,
                 categoryRequest.getCategoryType(),
                 categoryRequest.getName()
