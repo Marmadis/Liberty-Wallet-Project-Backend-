@@ -31,7 +31,7 @@ dependencies {
 	implementation("org.flywaydb:flyway-core")
 	implementation("org.projectlombok:lombok")
 	implementation("com.squareup.okhttp3:okhttp:4.10.0")
-	implementation ("com.github.haifengl:smile-core:3.0.1")
+	implementation("com.github.haifengl:smile-core:3.0.1")
 	implementation ("com.fasterxml.jackson.core:jackson-databind:2.15.0")
 	implementation("org.flywaydb:flyway-database-postgresql")
 	compileOnly("org.projectlombok:lombok")
