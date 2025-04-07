@@ -4,8 +4,6 @@ import com.libertywallet.dto.JwtAuthDto;
 import com.libertywallet.dto.RefreshTokenDto;
 import com.libertywallet.dto.UserCredentialDto;
 import com.libertywallet.exception.AuthenticationException;
-import com.libertywallet.exception.EmailNotFoundException;
-import com.libertywallet.models.User;
 import com.libertywallet.security.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

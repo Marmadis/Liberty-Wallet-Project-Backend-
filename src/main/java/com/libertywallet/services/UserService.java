@@ -5,7 +5,6 @@ import com.libertywallet.dto.JwtAuthDto;
 import com.libertywallet.dto.RefreshTokenDto;
 import com.libertywallet.dto.UserCredentialDto;
 import com.libertywallet.dto.UserDto;
-import com.libertywallet.exception.AlreadyExistException;
 import com.libertywallet.exception.AuthenticationException;
 import com.libertywallet.exception.NotFoundException;
 import com.libertywallet.mapper.UserMapper;
@@ -20,7 +19,6 @@ import com.libertywallet.repositories.UserRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-import java.util.UUID;
 
 
 @Slf4j

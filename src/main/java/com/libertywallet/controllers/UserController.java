@@ -1,7 +1,6 @@
 package com.libertywallet.controllers;
 
 import com.libertywallet.dto.UserDto;
-import com.libertywallet.repositories.UserRepository;
 import com.libertywallet.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.crossstore.ChangeSetPersister;
