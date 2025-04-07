@@ -33,14 +33,17 @@ public class UserService {
 
 
     public JwtAuthDto signIn(UserCredentialDto userCredentialDto) throws AuthenticationException {
+        log.info("Sign in...");
         User user = findByCredentials(userCredentialDto);
         return jwtService.generateToken(user.getEmail());
     }
 
     public JwtAuthDto refreshToken(RefreshTokenDto refreshTokenDto){
+        log.info("Refreshing refreshToken");
         String refreshToken = refreshTokenDto.getRefreshToken();
         if(refreshToken != null && jwtService.validateJwtToken(refreshToken)){
             User  user = findByEmail(jwtService.getEmailFromToken(refreshToken));
+            log.info("Refresh was successfully");
             return jwtService.refreshBaseToken(user.getEmail(),refreshToken);
         }
         throw new AuthenticationException("Invalid auth token");
@@ -48,18 +51,21 @@ public class UserService {
 
     @Transactional
     public UserDto getUserByEmail(String email) throws ChangeSetPersister.NotFoundException {
+        log.info("Getting user by email");
         return userMapper.toDto(userRepository.findByEmail(email)
                 .orElseThrow(ChangeSetPersister.NotFoundException::new));
     }
 
     @Transactional
     public UserDto getUserById(Long userId) throws ChangeSetPersister.NotFoundException {
+       log.info("Getting user by id");
         return userMapper.toDto(userRepository.findById(userId)
                 .orElseThrow(ChangeSetPersister.NotFoundException::new));
     }
 
 
     public String createUser(UserDto userDto){
+        log.info("Creating user");
         User user = userMapper.toEntity(userDto);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
@@ -67,6 +73,7 @@ public class UserService {
     }
 
     private User findByCredentials(UserCredentialDto userCredentialDto) throws AuthenticationException{
+        log.info("Finding by credentials");
         Optional<User> optionalUser = userRepository.findByEmail(userCredentialDto.getEmail());
         if(optionalUser.isPresent()){
             User user = optionalUser.get();
@@ -78,6 +85,7 @@ public class UserService {
     }
 
     private User findByEmail(String email) throws NotFoundException {
+        log.info("Finding by email");
         return userRepository.findByEmail(email).
                 orElseThrow(() -> new NotFoundException("User with email not found :"+email));
     }
