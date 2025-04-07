@@ -1,14 +1,15 @@
 package com.libertywallet.controllers;
 
+import com.libertywallet.dto.JwtAuthDto;
 import com.libertywallet.exception.EmailNotFoundException;
 import com.libertywallet.models.User;
+import com.libertywallet.security.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import com.libertywallet.repositories.UserRepository;
-import com.libertywallet.security.JwtUtil;
 import com.libertywallet.services.UserService;
 
 import java.util.Map;
@@ -21,7 +22,7 @@ public class AuthController {
     private final UserService userService;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JwtUtil jwtUtil;
+    private final JwtService jwtService;
 
 
 
@@ -42,7 +43,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody Map<String,String> request) {
+    public ResponseEntity<JwtAuthDto> login(@RequestBody Map<String,String> request) {
         String email = request.get("email");
         String password = request.get("password");
         log.info("Attempt to login in");
@@ -53,7 +54,7 @@ public class AuthController {
             log.warn("Invalid password",email);
             throw new IllegalArgumentException("Invalid password:"+email);
         }
-        String token = jwtUtil.generatedToken(email);
+        JwtAuthDto token = jwtService.generateToken(email);
         log.info("User successfully sign in");
         return ResponseEntity.ok(token);
     }

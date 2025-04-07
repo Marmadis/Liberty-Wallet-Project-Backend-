@@ -1,4 +1,4 @@
-package com.libertywallet.security;
+package com.libertywallet.security.jwt;
 
 
 import com.libertywallet.dto.JwtAuthDto;
@@ -38,7 +38,7 @@ public class JwtService {
         return jwtDto;
     }
 
-    private String getEmailFromToken(String token){
+    public String getEmailFromToken(String token){
         Claims claims = Jwts.parser()
                 .verifyWith(getSignInKey())
                 .build()
