@@ -14,6 +14,13 @@ import java.io.IOException;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(SecurityJwtException.class)
+    public ResponseEntity<String> handleSecurityException(SecurityJwtException e){
+        log.error("An error occurred in JwtService: {}",e.getMessage());
+        return new ResponseEntity<>("An error occurred with JwtToken(Service):"+e.getMessage(),HttpStatus.BAD_REQUEST);
+    }
+
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleGlobalException(Exception e){
         log.error("Unknown error occurred: {}",e.getMessage());
