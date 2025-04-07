@@ -7,12 +7,20 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
+import org.springframework.web.bind.annotation.ResponseStatus;
 import java.io.IOException;
 
 @Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(AuthenticationException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ResponseEntity<String> handleAuthException(AuthenticationException e){
+        log.error("Authentication failed: {}",e.getMessage());
+        return new ResponseEntity<>("Authentication failed:"+e.getMessage(),HttpStatus.FORBIDDEN);
+    }
+
 
     @ExceptionHandler(SecurityJwtException.class)
     public ResponseEntity<String> handleSecurityException(SecurityJwtException e){

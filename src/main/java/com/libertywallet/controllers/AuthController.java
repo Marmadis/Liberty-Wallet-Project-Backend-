@@ -1,6 +1,9 @@
 package com.libertywallet.controllers;
 
 import com.libertywallet.dto.JwtAuthDto;
+import com.libertywallet.dto.RefreshTokenDto;
+import com.libertywallet.dto.UserCredentialDto;
+import com.libertywallet.exception.AuthenticationException;
 import com.libertywallet.exception.EmailNotFoundException;
 import com.libertywallet.models.User;
 import com.libertywallet.security.jwt.JwtService;
@@ -25,37 +28,19 @@ public class AuthController {
     private final JwtService jwtService;
 
 
-
-    @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody Map<String,String> request)  {
-        String username = request.get("username");
-        String email = request.get("email");
-        String password = request.get("password");
-        log.info("Attempt to register user: {}", email);
-        if(username.isBlank() || email.isBlank() || password.isBlank()
-        || username == null || email == null || password == null){
-            log.warn("Email:{}",email+",username: {}",username+" or password missing:{}",password);
-            throw  new IllegalArgumentException("Email,username or password missing");
+    @PostMapping("/sign-in")
+    public ResponseEntity<JwtAuthDto> signIn(@RequestBody UserCredentialDto userCredentialDto){
+        try{
+            JwtAuthDto jwtAuthDto = userService.signIn(userCredentialDto);
+            return ResponseEntity.ok(jwtAuthDto);
+        } catch (AuthenticationException e){
+            throw new RuntimeException("Auth failed: "+e.getMessage());
         }
-        userService.userRegister(email, password, username);
-        log.info("User successfully registered: {}",email);
-        return ResponseEntity.ok("User is sign up!");
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<JwtAuthDto> login(@RequestBody Map<String,String> request) {
-        String email = request.get("email");
-        String password = request.get("password");
-        log.info("Attempt to login in");
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(()-> new EmailNotFoundException(email));
-
-        if(!passwordEncoder.matches(password,user.getPassword())){
-            log.warn("Invalid password",email);
-            throw new IllegalArgumentException("Invalid password:"+email);
-        }
-        JwtAuthDto token = jwtService.generateToken(email);
-        log.info("User successfully sign in");
-        return ResponseEntity.ok(token);
+    @PostMapping("/refresh")
+    public JwtAuthDto refresh (@RequestBody RefreshTokenDto refreshTokenDto) throws Exception{
+        return  userService.refreshToken(refreshTokenDto);
     }
+
 }
