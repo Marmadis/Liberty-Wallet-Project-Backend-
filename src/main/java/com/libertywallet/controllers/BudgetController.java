@@ -1,6 +1,7 @@
 package com.libertywallet.controllers;
 
 
+import com.libertywallet.dto.BudgetDto;
 import com.libertywallet.dto.BudgetRequest;
 import com.libertywallet.models.Budget;
 import com.libertywallet.services.BudgetService;
@@ -18,7 +19,7 @@ public class BudgetController {
     private  final  BudgetService budgetService;
 
     @GetMapping("/get/{userId}")
-    public ResponseEntity<Budget> getBudgetInfo(@PathVariable Long userId){
+    public ResponseEntity<BudgetDto> getBudgetInfo(@PathVariable Long userId){
         log.info("User request budget info");
         return ResponseEntity.ok(budgetService.getBudgetInformation(userId));
     }

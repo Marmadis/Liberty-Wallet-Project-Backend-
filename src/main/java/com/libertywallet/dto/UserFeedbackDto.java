@@ -3,7 +3,7 @@ package com.libertywallet.dto;
 import lombok.Data;
 
 @Data
-public class UserFeedbackDTO {
+public class UserFeedbackDto {
     private Long id;
     private Long userId;
     private Long recommendationId;

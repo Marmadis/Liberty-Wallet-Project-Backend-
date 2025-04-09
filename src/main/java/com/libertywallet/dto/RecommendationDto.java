@@ -5,7 +5,7 @@ import jakarta.persistence.Lob;
 import lombok.Data;
 
 @Data
-public class RecommendationDTO {
+public class RecommendationDto {
 
     private String category;
 

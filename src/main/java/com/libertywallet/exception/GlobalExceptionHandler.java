@@ -18,27 +18,27 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public ResponseEntity<String> handleAuthException(AuthenticationException e){
         log.error("Authentication failed: {}",e.getMessage());
-        return new ResponseEntity<>("Authentication failed:"+e.getMessage(),HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>("Authentication failed: "+e.getMessage(),HttpStatus.FORBIDDEN);
     }
 
 
     @ExceptionHandler(SecurityJwtException.class)
     public ResponseEntity<String> handleSecurityException(SecurityJwtException e){
         log.error("An error occurred in JwtService: {}",e.getMessage());
-        return new ResponseEntity<>("An error occurred with JwtToken(Service):"+e.getMessage(),HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("An error occurred with JwtToken(Service): "+e.getMessage(),HttpStatus.BAD_REQUEST);
     }
 
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleGlobalException(Exception e){
         log.error("Unknown error occurred: {}",e.getMessage());
-        return new ResponseEntity<>("An unknown error occurred:"+e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>("An unknown error occurred: "+e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(EmailNotFoundException.class)
     public ResponseEntity<String> handleEmailNotFoundException(EmailNotFoundException e){
         log.error("Email not found: {}",e.getMessage());
-        return new ResponseEntity<>("User into email not found:"+e.getMessage(),HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("User into email not found: "+e.getMessage(),HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(DataAccessException.class)
@@ -50,7 +50,7 @@ public class GlobalExceptionHandler {
         @ExceptionHandler(NotFoundException.class)
         public ResponseEntity<String> handleUserNotFoundException(NotFoundException e){
          log.error("Not found: {}",e.getMessage());
-         return new ResponseEntity<>("Not found"+e.getMessage(),HttpStatus.NOT_FOUND);
+         return new ResponseEntity<>("Not found: "+e.getMessage(),HttpStatus.NOT_FOUND);
         }
 
 

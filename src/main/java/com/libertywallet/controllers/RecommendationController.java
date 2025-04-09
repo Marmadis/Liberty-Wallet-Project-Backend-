@@ -1,8 +1,8 @@
 package com.libertywallet.controllers;
 
 import com.libertywallet.dto.FeedBackRequest;
-import com.libertywallet.dto.RecommendationDTO;
-import com.libertywallet.dto.UserFeedbackDTO;
+import com.libertywallet.dto.RecommendationDto;
+import com.libertywallet.dto.UserFeedbackDto;
 import com.libertywallet.models.UserFeedback;
 import com.libertywallet.services.RecommendationService;
 import lombok.RequiredArgsConstructor;
@@ -27,18 +27,18 @@ public class RecommendationController {
     }
 
     @GetMapping("/liked_rec/{userId}")
-    public ResponseEntity<List<UserFeedbackDTO>> likedRecommendation(@PathVariable Long userId){
-        List<UserFeedbackDTO> likedRecList = recommendationService.getLikedRecommendation(userId);
+    public ResponseEntity<List<UserFeedbackDto>> likedRecommendation(@PathVariable Long userId){
+        List<UserFeedbackDto> likedRecList = recommendationService.getLikedRecommendation(userId);
         return ResponseEntity.ok(likedRecList);
     }
 
     @GetMapping("/popular")
-    public List<RecommendationDTO> getPopularRecommendations() {
+    public List<RecommendationDto> getPopularRecommendations() {
         return recommendationService.getPopularRecommendations();
     }
 
     @GetMapping("/personalized/{userId}")
-    public List<RecommendationDTO> getPersonalizedRecommendations(@PathVariable Long userId) {
+    public List<RecommendationDto> getPersonalizedRecommendations(@PathVariable Long userId) {
         return recommendationService.getPersonalizedRecommendations(userId);
     }
 

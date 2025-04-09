@@ -1,8 +1,8 @@
 package com.libertywallet.services;
 
 
-import com.libertywallet.dto.RecommendationDTO;
-import com.libertywallet.dto.UserFeedbackDTO;
+import com.libertywallet.dto.RecommendationDto;
+import com.libertywallet.dto.UserFeedbackDto;
 import com.libertywallet.exception.NotFoundException;
 import com.libertywallet.models.Recommendation;
 import com.libertywallet.models.User;
@@ -38,7 +38,7 @@ public class RecommendationService {
         return feedbackList;
     }
 
-    public List<UserFeedbackDTO> getLikedRecommendation(Long userId){
+    public List<UserFeedbackDto> getLikedRecommendation(Long userId){
         List<UserFeedback> feedbackList = userFeedBackRepository.findByUserIdAndLikedTrue(userId);
         log.info("Finding user liked recommendations");
 
@@ -47,7 +47,7 @@ public class RecommendationService {
         }
 
         return feedbackList.stream().map(f -> {
-            UserFeedbackDTO dto = new UserFeedbackDTO();
+            UserFeedbackDto dto = new UserFeedbackDto();
             dto.setId(f.getId());
             dto.setUserId(f.getUser().getId());
             dto.setRecommendationId(f.getRecommendation().getId());
@@ -59,7 +59,7 @@ public class RecommendationService {
         }).collect(Collectors.toList());
     }
 
-    public List<RecommendationDTO> getPopularRecommendations(){
+    public List<RecommendationDto> getPopularRecommendations(){
         Pageable pageable = PageRequest.of(0, 10);
         List<Recommendation> recommendations = recommendationRepository.findTopRecommendationsWithLikes(pageable);
         return recommendations.stream()
@@ -68,13 +68,13 @@ public class RecommendationService {
     }
 
 
-    private RecommendationDTO convertToDTO(Recommendation recommendation) {
-        RecommendationDTO dto = new RecommendationDTO();
+    private RecommendationDto convertToDTO(Recommendation recommendation) {
+        RecommendationDto dto = new RecommendationDto();
         dto.setCategory(recommendation.getCategory());
         dto.setText(recommendation.getText());
         return dto;
     }
-    public List<RecommendationDTO> getPersonalizedRecommendations(Long userId){
+    public List<RecommendationDto> getPersonalizedRecommendations(Long userId){
         List<Recommendation> recommendations = recommendationRepository.findRecommendationsByUserPreferences(userId);
         return recommendations.stream()
                 .map(this::convertToDTO)

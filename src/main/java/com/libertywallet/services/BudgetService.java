@@ -1,6 +1,7 @@
 package com.libertywallet.services;
 
 
+import com.libertywallet.dto.BudgetDto;
 import com.libertywallet.exception.NotFoundException;
 import com.libertywallet.models.Budget;
 import com.libertywallet.models.User;
@@ -23,12 +24,17 @@ public class BudgetService {
     private final BudgetRepository budgetRepository;
 
 
-    public Budget getBudgetInformation(Long userId){
+    public BudgetDto getBudgetInformation(Long userId){
         log.info("Finding user budget information...");
         Budget budgetInfo = budgetRepository.findByUserId(userId)
                 .orElseThrow(() -> new NotFoundException("User  not found (user id:"+userId+")"));
         log.info("User budget information found");
-        return budgetInfo;
+        BudgetDto budgetDto = new BudgetDto();
+        budgetDto.setCurrent_balance(budgetInfo.getCurrent_balance());
+        budgetDto.setAmountLimit(budgetInfo.getAmountLimit());
+        budgetDto.setStart_date(budgetInfo.getStart_date());
+        budgetDto.setEnd_date(budgetInfo.getEnd_date());
+        return budgetDto;
     }
 
     public Budget createBudgetInformation(Long userId, int amountLimit, BigDecimal current_balance, LocalDate start,LocalDate end){
