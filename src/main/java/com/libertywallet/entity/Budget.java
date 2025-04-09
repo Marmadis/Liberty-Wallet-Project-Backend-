@@ -21,7 +21,7 @@ public class Budget {
     private User user;
 
     @Column
-    private BigDecimal current_balance;
+    private int current_balance;
 
     @Column(nullable = false)
     private int amountLimit;

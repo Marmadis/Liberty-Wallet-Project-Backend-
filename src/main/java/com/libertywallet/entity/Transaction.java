@@ -15,7 +15,7 @@ public class Transaction {
     private Long id;
 
     @Column(nullable = false)
-    private BigDecimal amount;
+    private int amount;
 
     @Column(nullable = false)
     private String description;

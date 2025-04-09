@@ -32,12 +32,12 @@ public class StatisticsService {
 
         double totalIncome = transactions.stream()
                 .filter(t -> t.getCategory().getType() == CategoryType.INCOME)
-                .mapToDouble(t -> t.getAmount().doubleValue())
+                .mapToDouble(t -> (double)t.getAmount())
                 .sum();
 
         double totalExpense = transactions.stream()
                 .filter(t -> t.getCategory().getType() == CategoryType.EXPENSE)
-                .mapToDouble(t -> t.getAmount().doubleValue())
+                .mapToDouble(t -> (double)t.getAmount())
                 .sum();
 
         double balance = totalIncome - totalExpense;
@@ -46,7 +46,7 @@ public class StatisticsService {
                 .filter(t -> t.getCategory().getType() == CategoryType.EXPENSE)
                 .collect(Collectors.groupingBy(
                         t -> t.getCategory().getName(),
-                        Collectors.summingDouble(t -> t.getAmount().doubleValue())
+                        Collectors.summingDouble(t -> (double)t.getAmount())
                 ));
 
         Map<String, Double> categoryPercents = expenseByCategory.entrySet().stream()

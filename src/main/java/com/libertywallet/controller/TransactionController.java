@@ -1,6 +1,7 @@
 package com.libertywallet.controller;
 
 
+import com.libertywallet.dto.TransactionDto;
 import com.libertywallet.request.TransactionRequest;
 import com.libertywallet.entity.Transaction;
 import com.libertywallet.service.TransactionService;
@@ -20,14 +21,13 @@ public class TransactionController {
 
 
     @GetMapping("/getall/{userId}")
-    public ResponseEntity<List<Transaction>> getAllTransaction(@PathVariable Long userId){
-        List<Transaction> transactionList = transactionService.getAllTransaction(userId);
-        return ResponseEntity.ok(transactionList);
+    public ResponseEntity<List<TransactionDto>> getAllTransaction(@PathVariable Long userId){
+
+        return ResponseEntity.ok(transactionService.getAllTransaction(userId));
     }
 
     @PostMapping("/create/{userId}")
-    public ResponseEntity<String> createTransaction(@PathVariable Long userId, TransactionRequest transactionRequest){
-
+    public ResponseEntity<String> createTransaction(@PathVariable Long userId, @RequestBody TransactionRequest transactionRequest){
         transactionService.createTransaction(
                 userId,
                 transactionRequest.getCategoryId(),
@@ -37,5 +37,15 @@ public class TransactionController {
         );
 
         return ResponseEntity.ok("New transaction added successfully");
+    }
+
+    @PostMapping("/edit/{userId}/{transactionId}")
+    public ResponseEntity<String> editTransaction(@PathVariable Long userId,@PathVariable Long transactionId,@RequestBody TransactionDto transactionDto){
+        return ResponseEntity.ok(transactionService.editTransaction(userId,transactionId,transactionDto));
+    }
+
+    @GetMapping("/delete/{userId}")
+    public ResponseEntity<String> deleteTransaction(@PathVariable Long userId){
+        return ResponseEntity.ok(transactionService.deleteTransaction(userId));
     }
 }

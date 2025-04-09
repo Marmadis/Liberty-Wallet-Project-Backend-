@@ -10,8 +10,6 @@ import com.libertywallet.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Service
@@ -37,7 +35,7 @@ public class BudgetService {
         return budgetDto;
     }
 
-    public Budget createBudgetInformation(Long userId, int amountLimit, BigDecimal current_balance, LocalDate start,LocalDate end){
+    public Budget createBudgetInformation(Long userId, int amountLimit, int current_balance, LocalDate start,LocalDate end){
         log.info("Setting new budget information");
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("User  not found (user id:"+userId+")"));
