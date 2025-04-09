@@ -1,6 +1,6 @@
 package com.libertywallet.security;
 
-import com.libertywallet.models.User;
+import com.libertywallet.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

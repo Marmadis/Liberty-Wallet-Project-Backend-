@@ -1,9 +1,8 @@
 package com.libertywallet.security;
 
 import com.libertywallet.exception.NotFoundException;
-import com.libertywallet.repositories.UserRepository;
+import com.libertywallet.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;

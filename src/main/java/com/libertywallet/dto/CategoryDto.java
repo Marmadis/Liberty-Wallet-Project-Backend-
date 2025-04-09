@@ -1,6 +1,6 @@
 package com.libertywallet.dto;
 
-import com.libertywallet.models.CategoryType;
+import com.libertywallet.entity.CategoryType;
 import lombok.Data;
 
 @Data

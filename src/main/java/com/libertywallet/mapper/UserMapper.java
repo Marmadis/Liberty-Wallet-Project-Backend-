@@ -1,6 +1,6 @@
 package com.libertywallet.mapper;
 
-import com.libertywallet.models.User;
+import com.libertywallet.entity.User;
 import com.libertywallet.dto.UserDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

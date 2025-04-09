@@ -1,9 +1,8 @@
 package com.libertywallet.mapper;
 
 import com.libertywallet.dto.CategoryDto;
-import com.libertywallet.models.Category;
+import com.libertywallet.entity.Category;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
