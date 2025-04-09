@@ -13,10 +13,13 @@ import com.libertywallet.security.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.libertywallet.repositories.UserRepository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
 
 import java.util.Optional;
 
@@ -29,7 +32,27 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final ImageService imageService;
 
+    public ResponseEntity<byte[]> getImage(Long userId){
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("User not found:"+userId));
+        String filepath = user.getAvatar();
+        ResponseEntity<byte[]> image = imageService.getImage(filepath);
+        log.info("The user has successfully downloaded the image");
+        return image;
+    }
+
+    public String saveImage(MultipartFile file,Long userId){
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("User not found:"+userId));
+
+        String filepath = imageService.saveImage(file);
+        user.setAvatar(filepath);
+        userRepository.save(user);
+        log.info("The user has successfully uploaded the image");
+        return "The user has successfully uploaded the image";
+    }
 
 
     public JwtAuthDto signIn(UserCredentialDto userCredentialDto) throws AuthenticationException {

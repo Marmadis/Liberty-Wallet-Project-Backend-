@@ -22,9 +22,9 @@ public class Recommendation {
     @Column(nullable = false)
     private String category;
 
-    @Lob
+
     @Column(nullable = false)
-    private byte[] image;
+    private String image;
 
     @Column(nullable = false)
     private String text;

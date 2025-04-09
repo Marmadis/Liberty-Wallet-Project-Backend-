@@ -27,7 +27,7 @@ public class RecommendationService {
     private final RecommendationRepository recommendationRepository;
     private final UserFeedBackRepository userFeedBackRepository;
     private final UserRepository userRepository;
-
+    private final ImageService imageService;
 
     public List<UserFeedback> getFavoriteRecommendation(Long userId){
         List<UserFeedback>  feedbackList = userFeedBackRepository.findByUserIdAndFavoriteTrue(userId);
@@ -71,7 +71,6 @@ public class RecommendationService {
     private RecommendationDTO convertToDTO(Recommendation recommendation) {
         RecommendationDTO dto = new RecommendationDTO();
         dto.setCategory(recommendation.getCategory());
-        dto.setImage(recommendation.getImage());
         dto.setText(recommendation.getText());
         return dto;
     }

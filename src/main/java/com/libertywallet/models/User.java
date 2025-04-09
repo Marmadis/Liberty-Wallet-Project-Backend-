@@ -25,9 +25,9 @@ public class User{
     @Column(nullable = false,unique = true)
     private String email;
 
-    @Lob
+
     @Column
-    private byte[] avatar;
+    private String avatar;
 
 
     @Column(nullable = false,updatable = false)
