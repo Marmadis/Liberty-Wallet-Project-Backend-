@@ -7,10 +7,9 @@ import lombok.Data;
 @Data
 public class RecommendationDto {
 
+    private Long id;
     private String category;
-
-    @Lob
-    private byte[] image;
+    private String image;
 
     private String text;
 }

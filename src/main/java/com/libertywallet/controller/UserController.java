@@ -31,7 +31,7 @@ public class UserController {
         return userService.getUserByEmail(email);
     }
 
-    @GetMapping("/avatar/download/{usedId}")
+    @GetMapping("/avatar/download/{userId}")
     public ResponseEntity<byte[]> getAvatar(@PathVariable Long userId){
         return userService.getImage(userId);
     }
