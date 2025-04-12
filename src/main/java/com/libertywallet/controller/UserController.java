@@ -7,9 +7,6 @@ import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import static org.springframework.http.MediaTypeFactory.getMediaType;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user")

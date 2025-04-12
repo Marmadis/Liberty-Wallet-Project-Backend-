@@ -1,7 +1,6 @@
 package com.libertywallet.dto;
 
 
-import jakarta.persistence.Lob;
 import lombok.Data;
 
 @Data

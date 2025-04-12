@@ -34,4 +34,14 @@ public class BudgetController {
                 );
         return ResponseEntity.ok("Budget information successfully written");
     }
+
+    @GetMapping("/delete/{userId}")
+    public ResponseEntity<String> deleteBudget(@PathVariable Long userId){
+        return ResponseEntity.ok(budgetService.deleteBudget(userId));
+    }
+
+    @GetMapping("/edit/{userId}")
+    public ResponseEntity<String> editBudget(@PathVariable Long userId, @RequestBody BudgetDto budgetDto){
+        return ResponseEntity.ok(budgetService.editBudget(userId,budgetDto));
+    }
 }

@@ -46,4 +46,22 @@ public class BudgetService {
         return budgetRepository.save(budget);
     }
 
+    public String editBudget(Long userId, BudgetDto budgetDto){
+        Budget budget = budgetRepository.findByUserId(userId)
+                .orElseThrow(()-> new NotFoundException("Budget by this userId not found"));
+
+        budget.setCurrent_balance(budgetDto.getCurrent_balance());
+        budget.setAmountLimit(budgetDto.getAmountLimit());
+        budget.setStart_date(budgetDto.getStart_date());
+        budget.setEnd_date(budgetDto.getEnd_date());
+
+        budgetRepository.save(budget);
+        return "Edited budget was successfully";
+    }
+
+    public String deleteBudget(Long userId){
+        budgetRepository.deleteByUserId(userId);
+        return "Deleted budget was successfully";
+    }
+
 }

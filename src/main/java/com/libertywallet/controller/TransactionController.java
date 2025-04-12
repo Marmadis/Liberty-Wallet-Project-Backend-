@@ -3,7 +3,6 @@ package com.libertywallet.controller;
 
 import com.libertywallet.dto.TransactionDto;
 import com.libertywallet.request.TransactionRequest;
-import com.libertywallet.entity.Transaction;
 import com.libertywallet.service.TransactionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -2,9 +2,7 @@ package com.libertywallet.mapper;
 
 
 import com.libertywallet.dto.BudgetDto;
-import com.libertywallet.dto.RecommendationDto;
 import com.libertywallet.entity.Budget;
-import com.libertywallet.entity.Recommendation;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

@@ -12,6 +12,7 @@ import java.util.Optional;
 
 public interface BudgetRepository extends JpaRepository<Budget,Long> {
     Optional<Budget> findByUserId(Long userId);
+    void deleteByUserId(Long userId);
 
     @Query("SELECT b.amountLimit - COALESCE(SUM(t.amount), 0) FROM Budget b " +
             "LEFT JOIN Transaction t ON t.user.id = b.user.id " +
