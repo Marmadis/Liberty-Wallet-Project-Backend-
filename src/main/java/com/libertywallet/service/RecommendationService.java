@@ -70,6 +70,7 @@ public class RecommendationService {
 
     private RecommendationDto convertToDTO(Recommendation recommendation) {
         RecommendationDto dto = new RecommendationDto();
+        dto.setId(recommendation.getId());
         dto.setCategory(recommendation.getCategory());
         dto.setText(recommendation.getText());
         return dto;

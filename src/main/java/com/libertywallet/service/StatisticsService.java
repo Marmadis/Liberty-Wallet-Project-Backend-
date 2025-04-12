@@ -1,8 +1,10 @@
 package com.libertywallet.service;
 
+import com.libertywallet.entity.Budget;
 import com.libertywallet.entity.CategoryType;
 import com.libertywallet.entity.Transaction;
 import com.libertywallet.entity.User;
+import com.libertywallet.repository.BudgetRepository;
 import com.libertywallet.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,7 +17,7 @@ import java.util.stream.Collectors;
 public class StatisticsService {
 
     private final UserRepository userRepository;
-
+    private final BudgetRepository budgetRepository;
     public ExpenseAnalysisDTO getUserExpenseAnalysis(String email) {
         Optional<User> optionalUser = userRepository.findByEmail(email);
 
@@ -25,6 +27,11 @@ public class StatisticsService {
 
         User user = optionalUser.get();
         List<Transaction> transactions = user.getTransactionList();
+
+
+        Optional<Budget> optionalBudget = budgetRepository.findByUserId(user.getId());
+        Budget budget = optionalBudget.get();
+        double balance = budget.getCurrent_balance();
 
         if (transactions == null || transactions.isEmpty()) {
             return new ExpenseAnalysisDTO(0.0, 0.0, 0.0, new HashMap<>());
@@ -40,7 +47,6 @@ public class StatisticsService {
                 .mapToDouble(t -> (double)t.getAmount())
                 .sum();
 
-        double balance = totalIncome - totalExpense;
 
         Map<String, Double> expenseByCategory = transactions.stream()
                 .filter(t -> t.getCategory().getType() == CategoryType.EXPENSE)

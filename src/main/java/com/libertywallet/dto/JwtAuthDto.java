@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class JwtAuthDto {
-    private Long id;
+    private Long userId;
     private String token;
     private String refreshToken;
 }

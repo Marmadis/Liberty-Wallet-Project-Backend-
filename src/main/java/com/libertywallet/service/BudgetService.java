@@ -5,6 +5,7 @@ import com.libertywallet.dto.BudgetDto;
 import com.libertywallet.exception.NotFoundException;
 import com.libertywallet.entity.Budget;
 import com.libertywallet.entity.User;
+import com.libertywallet.mapper.BudgetMapper;
 import com.libertywallet.repository.BudgetRepository;
 import com.libertywallet.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,18 +21,14 @@ public class BudgetService {
 
     private final UserRepository userRepository;
     private final BudgetRepository budgetRepository;
-
+    private final BudgetMapper budgetMapper;
 
     public BudgetDto getBudgetInformation(Long userId){
         log.info("Finding user budget information...");
         Budget budgetInfo = budgetRepository.findByUserId(userId)
                 .orElseThrow(() -> new NotFoundException("User  not found (user id:"+userId+")"));
         log.info("User budget information found");
-        BudgetDto budgetDto = new BudgetDto();
-        budgetDto.setCurrent_balance(budgetInfo.getCurrent_balance());
-        budgetDto.setAmountLimit(budgetInfo.getAmountLimit());
-        budgetDto.setStart_date(budgetInfo.getStart_date());
-        budgetDto.setEnd_date(budgetInfo.getEnd_date());
+        BudgetDto budgetDto = budgetMapper.toDto(budgetInfo);
         return budgetDto;
     }
 

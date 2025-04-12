@@ -18,7 +18,7 @@ public class Category {
     @JoinColumn(name = "user_id",nullable = true)
     private User user;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String name;
 
     @Enumerated(EnumType.STRING)
