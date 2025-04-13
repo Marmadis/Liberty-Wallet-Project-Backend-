@@ -27,6 +27,9 @@ public class Category {
 
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    private List<Payment> paymentList;
+
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<Prediction> predictionList;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)

@@ -35,6 +35,7 @@ public class RecommendationService {
         if(feedbackList.isEmpty()){
             throw new NotFoundException("Favorite recommendations not found (user id:"+userId+")");
         }
+
         return feedbackList;
     }
 
@@ -65,6 +66,7 @@ public class RecommendationService {
         return recommendations.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
+
     }
 
 

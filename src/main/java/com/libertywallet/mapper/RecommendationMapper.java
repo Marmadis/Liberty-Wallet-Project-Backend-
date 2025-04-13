@@ -7,7 +7,7 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface RecommendationMapper {
-    TransactionMapper INSTANCE = Mappers.getMapper(TransactionMapper.class);
+    RecommendationMapper INSTANCE = Mappers.getMapper(RecommendationMapper.class);
     RecommendationDto toDto(Recommendation recommendation);
     Recommendation toEntity(RecommendationDto recommendationDto);
 

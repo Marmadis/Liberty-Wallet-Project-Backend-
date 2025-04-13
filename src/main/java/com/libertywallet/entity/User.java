@@ -4,7 +4,6 @@ package com.libertywallet.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-
 import java.util.List;
 import java.time.LocalDate;
 
@@ -33,6 +32,9 @@ public class User{
     @Column(nullable = false,updatable = false)
     private LocalDate createdAt;
 
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private List<Payment> paymentList;
 
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
