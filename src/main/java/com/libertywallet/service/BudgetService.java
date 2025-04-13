@@ -28,7 +28,12 @@ public class BudgetService {
         Budget budgetInfo = budgetRepository.findByUserId(userId)
                 .orElseThrow(() -> new NotFoundException("User  not found (user id:"+userId+")"));
         log.info("User budget information found");
+        if(budgetInfo.getCurrent_balance() < budgetInfo.getAmountLimit()){
+            budgetInfo.setAmountLimitWarn(true);
+        }
+
         BudgetDto budgetDto = budgetMapper.toDto(budgetInfo);
+
         return budgetDto;
     }
 

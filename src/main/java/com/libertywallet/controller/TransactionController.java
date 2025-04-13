@@ -2,7 +2,6 @@ package com.libertywallet.controller;
 
 
 import com.libertywallet.dto.TransactionDto;
-import com.libertywallet.request.TransactionRequest;
 import com.libertywallet.service.TransactionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,23 +18,17 @@ public class TransactionController {
     private final TransactionService transactionService;
 
 
-    @GetMapping("/getall/{userId}")
-    public ResponseEntity<List<TransactionDto>> getAllTransaction(@PathVariable Long userId){
+    @GetMapping("/get/{userId}")
+    public ResponseEntity<List<TransactionDto>> getTransaction(@PathVariable Long userId){
 
         return ResponseEntity.ok(transactionService.getAllTransaction(userId));
     }
 
-    @PostMapping("/create/{userId}")
-    public ResponseEntity<String> createTransaction(@PathVariable Long userId, @RequestBody TransactionRequest transactionRequest){
-        transactionService.createTransaction(
-                userId,
-                transactionRequest.getCategoryId(),
-                transactionRequest.getAmount(),
-                transactionRequest.getDescription(),
-                transactionRequest.getDate()
-        );
+    @PostMapping("/create/{categoryId}/{userId}")
+    public ResponseEntity<String> createTransaction(@PathVariable Long userId,@PathVariable Long categoryId, @RequestBody TransactionDto transactionDto){
 
-        return ResponseEntity.ok("New transaction added successfully");
+
+        return ResponseEntity.ok(transactionService.createTransaction(userId,categoryId,transactionDto));
     }
 
     @PostMapping("/edit/{userId}/{transactionId}")

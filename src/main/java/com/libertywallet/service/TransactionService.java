@@ -41,33 +41,36 @@ public class TransactionService {
         return  dtos;
     }
 
-    public Transaction createTransaction(Long userId, Long categoryId, int amount,String description ,LocalDate date){
+    public String createTransaction(Long userId, Long categoryId, TransactionDto transactionDto){
         log.info("Creating new transaction...");
         Transaction transaction = new Transaction();
         Category category = categoryRepository.findById(categoryId)
           .orElseThrow(() ->  new NotFoundException("Category not found (user id:"+categoryId+")"));
         User user = userRepository.findById(userId)
                 .orElseThrow(() ->  new NotFoundException("User not found (user id:"+userId+")"));
-        transaction.setAmount(amount);
+        transaction.setAmount(transactionDto.getAmount());
         transaction.setUser(user);
         transaction.setCategory(category);
-        transaction.setDescription(description);
-        transaction.setDate(date);
+        transaction.setDescription(transactionDto.getDescription());
+        transaction.setDate(transactionDto.getDate());
 
         if(category.getType().equals(CategoryType.INCOME)){
             Budget budget = budgetRepository.findByUserId(userId)
                     .orElseThrow(() -> new NotFoundException("User not found:"+userId));
 
-            budget.setCurrent_balance(amount+budget.getCurrent_balance());
+            budget.setCurrent_balance(transactionDto.getAmount()+budget.getCurrent_balance());
             budgetRepository.save(budget);
         } else if(category.getType().equals(CategoryType.EXPENSE)){
             Budget budget = budgetRepository.findByUserId(userId)
                     .orElseThrow(() -> new NotFoundException("User not found:"+userId));
-            budget.setCurrent_balance(budget.getCurrent_balance()-amount);
+            budget.setCurrent_balance(budget.getCurrent_balance()-transactionDto.getAmount());
             budgetRepository.save(budget);
         }
 
-        return transactionRepository.save(transaction);
+        transactionRepository.save(transaction);
+
+        log.info("Created transaction was successfully!");
+        return "Created transaction was successfully!";
     }
 
     public String editTransaction(Long userId,Long transactionId,TransactionDto transactionDto){

@@ -21,6 +21,9 @@ public class Budget {
     private User user;
 
     @Column
+    private boolean amountLimitWarn;
+
+    @Column
     private int current_balance;
 
     @Column(nullable = false)

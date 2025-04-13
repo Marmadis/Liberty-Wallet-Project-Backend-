@@ -2,6 +2,7 @@ package com.libertywallet.service;
 
 
 import com.libertywallet.dto.PaymentDto;
+import com.libertywallet.dto.TransactionDto;
 import com.libertywallet.entity.*;
 import com.libertywallet.exception.NotFoundException;
 import com.libertywallet.mapper.PaymentMapper;
@@ -26,7 +27,9 @@ public class PaymentService {
     private final PaymentMapper paymentMapper;
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
+    private final TransactionService transactionService;
     private final TransactionRepository transactionRepository;
+
 
     public List<PaymentDto> getPayment(Long userId){
         List<Payment> payments = paymentRepository.findByUserId(userId);
@@ -103,13 +106,13 @@ public class PaymentService {
     }
 
     private void createTransaction(Payment payment){
-        Transaction transaction = new Transaction();
-        transaction.setUser(payment.getUser());
-        transaction.setCategory(payment.getCategory());
+        TransactionDto transaction = new TransactionDto();
         transaction.setAmount(payment.getMonthSum());
         transaction.setDescription(payment.getName());
         transaction.setDate(payment.getDate());
-        transactionRepository.save(transaction);
+
+        transactionService.createTransaction(payment.getUser().getId(),
+                payment.getCategory().getId(),transaction);
 
         log.info("Created new transaction!");
     }
