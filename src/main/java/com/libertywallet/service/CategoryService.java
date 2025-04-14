@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -25,7 +26,7 @@ public class CategoryService {
     private final UserRepository userRepository;
     private final CategoryMapper categoryMapper;
 
-    public Category createCategory(Long userId, CategoryType type,String name) {
+    public Category createCategory(UUID userId, CategoryType type, String name) {
         log.info("Creating new category for user(ID): {}",userId);
         Category category = new Category();
         User user = userRepository.findById(userId)
@@ -39,7 +40,7 @@ public class CategoryService {
         return categoryRepository.save(category);
     }
 
-    public List<CategoryDto> getCategory(Long userId){
+    public List<CategoryDto> getCategory(UUID userId){
         log.info("Getting all category");
         List<Category> categoryList = categoryRepository.findByUserId(userId);
         List<CategoryDto> dto = categoryList.stream()

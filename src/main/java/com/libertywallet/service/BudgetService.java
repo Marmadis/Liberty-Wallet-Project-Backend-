@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Service
 @Slf4j
@@ -23,7 +24,7 @@ public class BudgetService {
     private final BudgetRepository budgetRepository;
     private final BudgetMapper budgetMapper;
 
-    public BudgetDto getBudgetInformation(Long userId){
+    public BudgetDto getBudgetInformation(UUID userId){
         log.info("Finding user budget information...");
         Budget budgetInfo = budgetRepository.findByUserId(userId)
                 .orElseThrow(() -> new NotFoundException("User  not found (user id:"+userId+")"));
@@ -37,7 +38,7 @@ public class BudgetService {
         return budgetDto;
     }
 
-    public Budget createBudgetInformation(Long userId, int amountLimit, int current_balance, LocalDate start,LocalDate end){
+    public Budget createBudgetInformation(UUID userId, int amountLimit, int current_balance, LocalDate start,LocalDate end){
         log.info("Setting new budget information");
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("User  not found (user id:"+userId+")"));
@@ -51,7 +52,7 @@ public class BudgetService {
         return budgetRepository.save(budget);
     }
 
-    public String editBudget(Long userId, BudgetDto budgetDto){
+    public String editBudget(UUID userId, BudgetDto budgetDto){
         Budget budget = budgetRepository.findByUserId(userId)
                 .orElseThrow(()-> new NotFoundException("Budget by this userId not found"));
 
@@ -64,7 +65,7 @@ public class BudgetService {
         return "Edited budget was successfully";
     }
 
-    public String deleteBudget(Long userId){
+    public String deleteBudget(UUID userId){
         budgetRepository.deleteByUserId(userId);
         return "Deleted budget was successfully";
     }

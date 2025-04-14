@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -29,7 +30,7 @@ public class RecommendationService {
     private final UserRepository userRepository;
     private final ImageService imageService;
 
-    public List<UserFeedback> getFavoriteRecommendation(Long userId){
+    public List<UserFeedback> getFavoriteRecommendation(UUID userId){
         List<UserFeedback>  feedbackList = userFeedBackRepository.findByUserIdAndFavoriteTrue(userId);
         log.info("Finding user favorite recommendations");
         if(feedbackList.isEmpty()){
@@ -39,7 +40,7 @@ public class RecommendationService {
         return feedbackList;
     }
 
-    public List<UserFeedbackDto> getLikedRecommendation(Long userId){
+    public List<UserFeedbackDto> getLikedRecommendation(UUID userId){
         List<UserFeedback> feedbackList = userFeedBackRepository.findByUserIdAndLikedTrue(userId);
         log.info("Finding user liked recommendations");
 
@@ -77,14 +78,14 @@ public class RecommendationService {
         dto.setText(recommendation.getText());
         return dto;
     }
-    public List<RecommendationDto> getPersonalizedRecommendations(Long userId){
+    public List<RecommendationDto> getPersonalizedRecommendations(UUID userId){
         List<Recommendation> recommendations = recommendationRepository.findRecommendationsByUserPreferences(userId);
         return recommendations.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
 
-    public void giveFeedBack(Long userId,Long recommendationId,Boolean favorite,Boolean liked){
+    public void giveFeedBack(UUID userId,UUID recommendationId,Boolean favorite,Boolean liked){
         UserFeedback userFeedback = new UserFeedback();
         Recommendation recommendation = recommendationRepository.findById(recommendationId)
                 .orElseThrow(() -> new NotFoundException("Recommendation not found(recommendation id:"+recommendationId+")"));

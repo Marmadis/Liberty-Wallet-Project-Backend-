@@ -7,6 +7,9 @@ import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.UUID;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user")
@@ -19,7 +22,7 @@ public class UserController {
     }
 
     @GetMapping("/get/{userId}")
-    public UserDto getUserById(@PathVariable Long userId) throws ChangeSetPersister.NotFoundException {
+    public UserDto getUserById(@PathVariable UUID userId) throws ChangeSetPersister.NotFoundException {
         return userService.getUserById(userId);
     }
 
@@ -29,12 +32,12 @@ public class UserController {
     }
 
     @GetMapping("/avatar/download/{userId}")
-    public ResponseEntity<byte[]> getAvatar(@PathVariable Long userId){
+    public ResponseEntity<byte[]> getAvatar(@PathVariable UUID userId){
         return userService.getImage(userId);
     }
 
     @PostMapping("/avatar/upload/{userId}")
-    public ResponseEntity<String> saveAvatar(@PathVariable Long userId, @RequestBody MultipartFile file){
+    public ResponseEntity<String> saveAvatar(@PathVariable UUID userId, @RequestBody MultipartFile file){
         return ResponseEntity.ok(userService.saveImage(file,userId));
     }
 }

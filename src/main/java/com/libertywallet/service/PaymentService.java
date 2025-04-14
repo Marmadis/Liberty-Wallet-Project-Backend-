@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,7 +32,7 @@ public class PaymentService {
     private final TransactionRepository transactionRepository;
 
 
-    public List<PaymentDto> getPayment(Long userId){
+    public List<PaymentDto> getPayment(UUID userId){
         List<Payment> payments = paymentRepository.findByUserId(userId);
         List<PaymentDto> paymentDtos = payments.stream()
                 .map(paymentMapper::toDto)
@@ -44,7 +45,7 @@ public class PaymentService {
         return paymentDtos;
     }
 
-    public String createPayment(Long userId,PaymentDto paymentDto){
+    public String createPayment(UUID userId,PaymentDto paymentDto){
         Category category = new Category();
         Payment payment = new Payment();
         User user = userRepository.findById(userId)
@@ -67,7 +68,7 @@ public class PaymentService {
         return "Created payment was successfully!";
     }
 
-    public String updatePayment(Long paymentId,PaymentDto paymentDto){
+    public String updatePayment(UUID paymentId,PaymentDto paymentDto){
         Payment payment = paymentRepository.findById(paymentId)
                 .orElseThrow(() -> new NotFoundException("Payment not found: "+paymentId));
 

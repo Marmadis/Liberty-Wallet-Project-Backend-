@@ -6,12 +6,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import java.util.List;
+import java.util.UUID;
 
 
-public interface TransactionRepository extends JpaRepository<Transaction,Long> {
+public interface TransactionRepository extends JpaRepository<Transaction,UUID> {
 
-    List<Transaction> findByUserId(Long userId);
-    void deleteByUserId(Long userId);
+    List<Transaction> findByUserId(UUID userId);
+    void deleteByUserId(UUID userId);
     @Query(value = """
         SELECT TO_CHAR(date, 'YYYY-MM') AS month, SUM(amount) AS total
         FROM transactions
@@ -19,7 +20,7 @@ public interface TransactionRepository extends JpaRepository<Transaction,Long> {
         GROUP BY month
         ORDER BY month
     """, nativeQuery = true)
-    List<Object[]> getRawMonthlyExpenses(@Param("userId") Long userId);
+    List<Object[]> getRawMonthlyExpenses(@Param("userId") UUID userId);
 
 
 }

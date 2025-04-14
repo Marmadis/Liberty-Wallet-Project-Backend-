@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -26,7 +27,7 @@ public class TransactionService {
     private final TransactionMapper transactionMapper;
     private final BudgetRepository budgetRepository;
 
-    public List<TransactionDto> getAllTransaction(Long userId){
+    public List<TransactionDto> getAllTransaction(UUID userId){
         log.info("Getting all transaction info");
         List<Transaction> transactionList = transactionRepository.findByUserId(userId);
         List<TransactionDto> dtos = transactionList.stream()
@@ -41,7 +42,7 @@ public class TransactionService {
         return  dtos;
     }
 
-    public String createTransaction(Long userId, Long categoryId, TransactionDto transactionDto){
+    public String createTransaction(UUID userId, UUID categoryId, TransactionDto transactionDto){
         log.info("Creating new transaction...");
         Transaction transaction = new Transaction();
         Category category = categoryRepository.findById(categoryId)
@@ -73,7 +74,7 @@ public class TransactionService {
         return "Created transaction was successfully!";
     }
 
-    public String editTransaction(Long userId,Long transactionId,TransactionDto transactionDto){
+    public String editTransaction(UUID userId,UUID transactionId,TransactionDto transactionDto){
         Transaction transaction = transactionRepository.findById(transactionId)
                 .orElseThrow(() -> new NotFoundException("Transaction not found:"+transactionId));
         transaction.setAmount(transactionDto.getAmount());
@@ -99,7 +100,7 @@ public class TransactionService {
         return "Edited transaction was successfully";
     }
 
-    public String deleteTransaction(Long userId){
+    public String deleteTransaction(UUID userId){
         transactionRepository.deleteByUserId(userId);
         return "Deleted transaction was successfully";
     }

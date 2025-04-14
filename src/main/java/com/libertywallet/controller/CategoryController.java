@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -18,13 +19,13 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping("/get/{userId}")
-    public ResponseEntity<List<CategoryDto>> getCategory(@PathVariable  Long userId){
+    public ResponseEntity<List<CategoryDto>> getCategory(@PathVariable UUID userId){
         List<CategoryDto> categoryList = categoryService.getCategory(userId);
         return ResponseEntity.ok(categoryList);
     }
 
     @PostMapping("/create/{userId}")
-    public ResponseEntity<String> createCategory(@PathVariable Long userId, @RequestBody CategoryDto categoryDto)  {
+    public ResponseEntity<String> createCategory(@PathVariable UUID userId, @RequestBody CategoryDto categoryDto)  {
         categoryService.createCategory(
                 userId,
                 categoryDto.getType(),

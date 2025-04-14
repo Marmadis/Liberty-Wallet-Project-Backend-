@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.ResponseEntity;
+import org.springframework.objenesis.instantiator.util.UnsafeUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.libertywallet.repository.UserRepository;
@@ -22,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 import java.util.Optional;
+import java.util.UUID;
 
 
 @Slf4j
@@ -34,7 +36,7 @@ public class UserService {
     private final JwtService jwtService;
     private final ImageService imageService;
 
-    public ResponseEntity<byte[]> getImage(Long userId){
+    public ResponseEntity<byte[]> getImage(UUID userId){
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("User not found:"+userId));
         String filepath = user.getAvatar();
@@ -43,7 +45,7 @@ public class UserService {
         return image;
     }
 
-    public String saveImage(MultipartFile file,Long userId){
+    public String saveImage(MultipartFile file,UUID userId){
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("User not found:"+userId));
 
@@ -80,7 +82,7 @@ public class UserService {
     }
 
     @Transactional
-    public UserDto getUserById(Long userId) throws ChangeSetPersister.NotFoundException {
+    public UserDto getUserById(UUID userId) throws ChangeSetPersister.NotFoundException {
        log.info("Getting user by id");
         return userMapper.toDto(userRepository.findById(userId)
                 .orElseThrow(ChangeSetPersister.NotFoundException::new));

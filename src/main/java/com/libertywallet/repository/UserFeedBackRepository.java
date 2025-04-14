@@ -6,10 +6,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
-public interface UserFeedBackRepository  extends JpaRepository<UserFeedback ,Long> {
-    Optional<UserFeedback> findByUserId(Long userId);
-    List<UserFeedback> findByUserIdAndFavoriteTrue(Long userId);
-    List<UserFeedback> findByUserIdAndLikedTrue(Long userId);
+public interface UserFeedBackRepository  extends JpaRepository<UserFeedback , UUID> {
+    Optional<UserFeedback> findByUserId(UUID userId);
+    List<UserFeedback> findByUserIdAndFavoriteTrue(UUID userId);
+    List<UserFeedback> findByUserIdAndLikedTrue(UUID userId);
 
 }

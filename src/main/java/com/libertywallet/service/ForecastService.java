@@ -7,6 +7,7 @@ import smile.timeseries.ARMA;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -16,7 +17,7 @@ public class ForecastService {
     private final TransactionRepository transactionRepository;
 
 
-    public double forecastNextMonthExpenses(Long userId) {
+    public double forecastNextMonthExpenses(UUID userId) {
         List<Object[]> rawData = transactionRepository.getRawMonthlyExpenses(userId);
 
         if (rawData.isEmpty()) {

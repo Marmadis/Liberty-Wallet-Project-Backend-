@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @Slf4j
@@ -21,13 +22,13 @@ public class RecommendationController {
 
 
     @GetMapping("/favorite_rec/{userId}")
-    public ResponseEntity<List<UserFeedback>> favoriteRecommendation(@PathVariable Long userId){
+    public ResponseEntity<List<UserFeedback>> favoriteRecommendation(@PathVariable UUID userId){
         List<UserFeedback> favoriteRecList = recommendationService.getFavoriteRecommendation(userId);
         return ResponseEntity.ok(favoriteRecList);
     }
 
     @GetMapping("/liked_rec/{userId}")
-    public ResponseEntity<List<UserFeedbackDto>> likedRecommendation(@PathVariable Long userId){
+    public ResponseEntity<List<UserFeedbackDto>> likedRecommendation(@PathVariable UUID userId){
         List<UserFeedbackDto> likedRecList = recommendationService.getLikedRecommendation(userId);
         return ResponseEntity.ok(likedRecList);
     }
@@ -38,13 +39,13 @@ public class RecommendationController {
     }
 
     @GetMapping("/personalized/{userId}")
-    public List<RecommendationDto> getPersonalizedRecommendations(@PathVariable Long userId) {
+    public List<RecommendationDto> getPersonalizedRecommendations(@PathVariable UUID userId) {
         return recommendationService.getPersonalizedRecommendations(userId);
     }
 
     @PostMapping("/feedback/{userId}")
-    public void giveFeedback(@PathVariable Long userId,@RequestBody FeedBackRequest feedBackRequest){
-        Long recommendationId = feedBackRequest.getRecommendationId();
+    public void giveFeedback(@PathVariable UUID userId,@RequestBody FeedBackRequest feedBackRequest){
+        UUID recommendationId = feedBackRequest.getRecommendationId();
         Boolean liked = feedBackRequest.getLiked();
         Boolean favorite = feedBackRequest.getFavorite();
         recommendationService.giveFeedBack(userId,recommendationId,favorite,liked);

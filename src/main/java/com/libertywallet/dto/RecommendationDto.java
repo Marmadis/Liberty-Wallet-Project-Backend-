@@ -3,10 +3,12 @@ package com.libertywallet.dto;
 
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 public class RecommendationDto {
 
-    private Long id;
+    private UUID id;
     private String category;
     private String image;
 

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -19,25 +20,25 @@ public class TransactionController {
 
 
     @GetMapping("/get/{userId}")
-    public ResponseEntity<List<TransactionDto>> getTransaction(@PathVariable Long userId){
+    public ResponseEntity<List<TransactionDto>> getTransaction(@PathVariable UUID userId){
 
         return ResponseEntity.ok(transactionService.getAllTransaction(userId));
     }
 
     @PostMapping("/create/{categoryId}/{userId}")
-    public ResponseEntity<String> createTransaction(@PathVariable Long userId,@PathVariable Long categoryId, @RequestBody TransactionDto transactionDto){
+    public ResponseEntity<String> createTransaction(@PathVariable UUID userId,@PathVariable UUID categoryId, @RequestBody TransactionDto transactionDto){
 
 
         return ResponseEntity.ok(transactionService.createTransaction(userId,categoryId,transactionDto));
     }
 
     @PostMapping("/edit/{userId}/{transactionId}")
-    public ResponseEntity<String> editTransaction(@PathVariable Long userId,@PathVariable Long transactionId,@RequestBody TransactionDto transactionDto){
+    public ResponseEntity<String> editTransaction(@PathVariable UUID userId,@PathVariable UUID transactionId,@RequestBody TransactionDto transactionDto){
         return ResponseEntity.ok(transactionService.editTransaction(userId,transactionId,transactionDto));
     }
 
     @GetMapping("/delete/{userId}")
-    public ResponseEntity<String> deleteTransaction(@PathVariable Long userId){
+    public ResponseEntity<String> deleteTransaction(@PathVariable UUID userId){
         return ResponseEntity.ok(transactionService.deleteTransaction(userId));
     }
 }

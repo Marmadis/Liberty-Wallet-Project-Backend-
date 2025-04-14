@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -18,13 +20,13 @@ public class BudgetController {
     private  final  BudgetService budgetService;
 
     @GetMapping("/get/{userId}")
-    public ResponseEntity<BudgetDto> getBudgetInfo(@PathVariable Long userId){
+    public ResponseEntity<BudgetDto> getBudgetInfo(@PathVariable UUID userId){
         log.info("User request budget info");
         return ResponseEntity.ok(budgetService.getBudgetInformation(userId));
     }
 
     @PostMapping("/create/{userId}")
-    public ResponseEntity<String> createBudgetInfo(@PathVariable Long userId, @RequestBody BudgetRequest budgetRequest){
+    public ResponseEntity<String> createBudgetInfo(@PathVariable UUID userId, @RequestBody BudgetRequest budgetRequest){
         budgetService.createBudgetInformation(
                 userId,
                 budgetRequest.getAmountLimit(),
@@ -36,12 +38,12 @@ public class BudgetController {
     }
 
     @GetMapping("/delete/{userId}")
-    public ResponseEntity<String> deleteBudget(@PathVariable Long userId){
+    public ResponseEntity<String> deleteBudget(@PathVariable UUID userId){
         return ResponseEntity.ok(budgetService.deleteBudget(userId));
     }
 
     @GetMapping("/edit/{userId}")
-    public ResponseEntity<String> editBudget(@PathVariable Long userId, @RequestBody BudgetDto budgetDto){
+    public ResponseEntity<String> editBudget(@PathVariable UUID userId, @RequestBody BudgetDto budgetDto){
         return ResponseEntity.ok(budgetService.editBudget(userId,budgetDto));
     }
 }
