@@ -18,11 +18,11 @@ public class StatisticsService {
 
     private final UserRepository userRepository;
     private final BudgetRepository budgetRepository;
-    public ExpenseAnalysisDTO getUserExpenseAnalysis(String email) {
-        Optional<User> optionalUser = userRepository.findByEmail(email);
+    public ExpenseAnalysisDTO getUserExpenseAnalysis(UUID userId) {
+        Optional<User> optionalUser = userRepository.findById(userId);
 
         if (optionalUser.isEmpty()) {
-            throw new RuntimeException("User not found with email: " + email);
+            throw new RuntimeException("User not found with id: " + userId);
         }
 
         User user = optionalUser.get();
