@@ -2,7 +2,6 @@ package com.libertywallet.controller;
 
 
 import com.libertywallet.dto.BudgetDto;
-import com.libertywallet.request.BudgetRequest;
 import com.libertywallet.service.BudgetService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,15 +25,8 @@ public class BudgetController {
     }
 
     @PostMapping("/create/{userId}")
-    public ResponseEntity<String> createBudgetInfo(@PathVariable UUID userId, @RequestBody BudgetRequest budgetRequest){
-        budgetService.createBudgetInformation(
-                userId,
-                budgetRequest.getAmountLimit(),
-                budgetRequest.getCurrent_balance(),
-                budgetRequest.getStart_date(),
-                budgetRequest.getEnd_date()
-                );
-        return ResponseEntity.ok("Budget information successfully written");
+    public ResponseEntity<String> createBudgetInfo(@PathVariable UUID userId, @RequestBody BudgetDto budgetDto){
+        return ResponseEntity.ok(budgetService.createBudgetInformation(userId,budgetDto));
     }
 
     @GetMapping("/delete/{userId}")

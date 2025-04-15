@@ -38,18 +38,19 @@ public class BudgetService {
         return budgetDto;
     }
 
-    public Budget createBudgetInformation(UUID userId, int amountLimit, int current_balance, LocalDate start,LocalDate end){
+    public String createBudgetInformation(UUID userId, BudgetDto budgetDto){
         log.info("Setting new budget information");
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("User  not found (user id:"+userId+")"));
         Budget budget = new Budget();
         budget.setUser(user);
-        budget.setAmountLimit(amountLimit);
-        budget.setStart_date(start);
-        budget.setEnd_date(end);
-        budget.setCurrent_balance(current_balance);
+        budget.setAmountLimit(budgetDto.getAmountLimit());
+        budget.setStart_date(budgetDto.getStart_date());
+        budget.setEnd_date(budgetDto.getEnd_date());
+        budget.setCurrent_balance(budgetDto.getCurrent_balance());
         log.info("User budget information was set");
-        return budgetRepository.save(budget);
+        budgetRepository.save(budget);
+        return "Budget information successfully written";
     }
 
     public String editBudget(UUID userId, BudgetDto budgetDto){

@@ -1,6 +1,6 @@
 package com.libertywallet.controller;
 
-import com.libertywallet.request.FeedBackRequest;
+import com.libertywallet.dto.FeedBackDto;
 import com.libertywallet.dto.RecommendationDto;
 import com.libertywallet.dto.UserFeedbackDto;
 import com.libertywallet.entity.UserFeedback;
@@ -44,7 +44,7 @@ public class RecommendationController {
     }
 
     @PostMapping("/feedback/{userId}")
-    public void giveFeedback(@PathVariable UUID userId,@RequestBody FeedBackRequest feedBackRequest){
+    public void giveFeedback(@PathVariable UUID userId,@RequestBody FeedBackDto feedBackRequest){
         UUID recommendationId = feedBackRequest.getRecommendationId();
         Boolean liked = feedBackRequest.getLiked();
         Boolean favorite = feedBackRequest.getFavorite();
