@@ -2,6 +2,7 @@ package com.libertywallet.dto;
 
 import lombok.Data;
 
+import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -12,5 +13,4 @@ public class UserFeedbackDto {
     private boolean liked;
     private boolean favorite;
     private String recommendationText;
-    private String recommendationCategory;
 }

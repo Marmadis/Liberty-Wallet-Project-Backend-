@@ -26,9 +26,9 @@ public class PaymentController {
         return ResponseEntity.ok(paymentService.createPayment(userId,paymentDto));
     }
 
-    @PostMapping("/update/{userId}")
-    public ResponseEntity<String> updatePayment(@PathVariable UUID userId,@RequestBody PaymentDto paymentDto){
-        return ResponseEntity.ok(paymentService.updatePayment(userId,paymentDto));
+    @PostMapping("/update/{paymentId}")
+    public ResponseEntity<String> updatePayment(@PathVariable UUID paymentId,@RequestBody PaymentDto paymentDto){
+        return ResponseEntity.ok(paymentService.updatePayment(paymentId,paymentDto));
     }
 
 }

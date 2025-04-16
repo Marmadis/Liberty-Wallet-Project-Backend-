@@ -19,9 +19,6 @@ import com.libertywallet.service.UserService;
 @RequestMapping("/auth")
 public class AuthController {
     private final UserService userService;
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final JwtService jwtService;
 
 
     @PostMapping("/sign-in")

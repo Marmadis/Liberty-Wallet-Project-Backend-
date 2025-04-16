@@ -62,8 +62,8 @@ public class PaymentService {
 
         category.setName(payment.getName());
         category.setType(CategoryType.EXPENSE);
-
         categoryRepository.save(category);
+        payment.setCategory(category);
         paymentRepository.save(payment);
         return "Created payment was successfully!";
     }

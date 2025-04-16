@@ -9,7 +9,6 @@ import java.util.UUID;
 public class RecommendationDto {
 
     private UUID id;
-    private String category;
     private String image;
 
     private String text;

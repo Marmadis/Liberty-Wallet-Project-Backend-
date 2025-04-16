@@ -7,6 +7,7 @@ import com.libertywallet.exception.NotFoundException;
 import com.libertywallet.entity.Recommendation;
 import com.libertywallet.entity.User;
 import com.libertywallet.entity.UserFeedback;
+import com.libertywallet.mapper.RecommendationMapper;
 import com.libertywallet.repository.RecommendationRepository;
 import com.libertywallet.repository.UserFeedBackRepository;
 import com.libertywallet.repository.UserRepository;
@@ -28,6 +29,7 @@ public class RecommendationService {
     private final RecommendationRepository recommendationRepository;
     private final UserFeedBackRepository userFeedBackRepository;
     private final UserRepository userRepository;
+    private final RecommendationMapper recommendationMapper;
     private final ImageService imageService;
 
     public List<UserFeedback> getFavoriteRecommendation(UUID userId){
@@ -56,7 +58,6 @@ public class RecommendationService {
             dto.setLiked(f.getLiked());
             dto.setFavorite(f.getFavorite());
             dto.setRecommendationText(f.getRecommendation().getText());
-            dto.setRecommendationCategory(f.getRecommendation().getCategory());
             return dto;
         }).collect(Collectors.toList());
     }
@@ -65,23 +66,15 @@ public class RecommendationService {
         Pageable pageable = PageRequest.of(0, 10);
         List<Recommendation> recommendations = recommendationRepository.findTopRecommendationsWithLikes(pageable);
         return recommendations.stream()
-                .map(this::convertToDTO)
+                .map(recommendationMapper::toDto)
                 .collect(Collectors.toList());
 
     }
 
-
-    private RecommendationDto convertToDTO(Recommendation recommendation) {
-        RecommendationDto dto = new RecommendationDto();
-        dto.setId(recommendation.getId());
-        dto.setCategory(recommendation.getCategory());
-        dto.setText(recommendation.getText());
-        return dto;
-    }
     public List<RecommendationDto> getPersonalizedRecommendations(UUID userId){
         List<Recommendation> recommendations = recommendationRepository.findRecommendationsByUserPreferences(userId);
         return recommendations.stream()
-                .map(this::convertToDTO)
+                .map(recommendationMapper::toDto)
                 .collect(Collectors.toList());
     }
 

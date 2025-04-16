@@ -18,9 +18,14 @@ public interface RecommendationRepository extends JpaRepository<Recommendation, 
     List<Recommendation> findTopRecommendationsWithLikes(Pageable pageable);
 
 
-    @Query("SELECT r FROM Recommendation r " +
-            "WHERE r.category IN (SELECT DISTINCT uf.recommendation.category FROM UserFeedback uf " +
-            "WHERE uf.user.id = :userId AND uf.liked = true) " +
-            "ORDER BY r.createdAt DESC")
+    @Query("""
+SELECT r FROM Recommendation r
+WHERE r.id NOT IN (
+    SELECT uf.recommendation.id FROM UserFeedback uf
+    WHERE uf.user.id = :userId AND uf.liked = true
+)
+ORDER BY r.createdAt DESC
+""")
     List<Recommendation> findRecommendationsByUserPreferences(UUID userId);
+
 }

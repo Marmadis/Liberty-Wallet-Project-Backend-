@@ -20,29 +20,21 @@ public class Recommendation {
     @JoinColumn(name = "user_id",nullable = true)
     private User user;
 
-    @Column(nullable = false)
-    private String category;
 
-
-    @Column(nullable = false)
+    @Column
     private String image;
 
-    @Column(nullable = false)
+    @Column(nullable = false,columnDefinition = "TEXT")
     private String text;
 
     @Column(nullable = false,updatable = false)
     private LocalDateTime createdAt;
 
+
     @OneToMany(mappedBy = "recommendation",cascade = CascadeType.ALL)
     private List<UserFeedback> userFeedbackList;
 
-    @ManyToMany
-    @JoinTable(
-            name = "recommendation_tags",
-            joinColumns = @JoinColumn(name = "recommendation_id"),
-            inverseJoinColumns = @JoinColumn(name = "tag_id")
-    )
-    private Set<Tag> tagSet = new HashSet<>();
+
 
     @PrePersist
     protected void onCreate() {
