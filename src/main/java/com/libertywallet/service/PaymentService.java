@@ -29,7 +29,6 @@ public class PaymentService {
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
     private final TransactionService transactionService;
-    private final TransactionRepository transactionRepository;
 
 
     public List<PaymentDto> getPayment(UUID userId){
@@ -83,24 +82,23 @@ public class PaymentService {
             payment.setCurrentNumberOfMonths(paymentDto.getCurrentNumberOfMonths());
             createTransaction(payment);
             log.info("Payment was completed");
-        }
-        else if(paymentDto.getNumberOfMonths() > payment.getCurrentNumberOfMonths()){
-          payment.setCurrentSum(payment.getCurrentSum() - paymentDto.getMonthSum());
-          payment.setCurrentNumberOfMonths(paymentDto.getCurrentNumberOfMonths());
-          createTransaction(payment);
-          payment.setDate(payment.getDate().plusMonths(1));
-          log.info("Payment updated successfully");
-        }
-        else if(paymentDto.getNumberOfMonths() < payment.getCurrentNumberOfMonths()){
-            payment.setCurrentSum(payment.getCurrentSum() + paymentDto.getMonthSum());
-            payment.setCurrentNumberOfMonths(paymentDto.getCurrentNumberOfMonths()-1);
-            transactionRepository.deleteByUserId(payment.getUser().getId());
-            payment.setDate(payment.getDate().minusMonths(1));
-            log.info("Payment canceled update successfully");
-        }
+        } else {
+            //5 3 -2
+            int result = paymentDto.getCurrentNumberOfMonths()-payment.getCurrentNumberOfMonths();
+            payment.setCurrentSum(payment.getCurrentSum()-(result*payment.getMonthSum()));
 
-
-
+            if(result < 0) {
+                payment.setCurrentNumberOfMonths(payment.getNumberOfMonths());
+                payment.setDate(payment.getDate().minusMonths(result));
+                payment.getCategory().setType(CategoryType.INCOME);
+                createTransaction(payment);
+            }else{
+                payment.setCurrentNumberOfMonths(paymentDto.getCurrentNumberOfMonths());
+                payment.setDate(payment.getDate().plusMonths(result));
+                payment.getCategory().setType(CategoryType.EXPENSE);
+                createTransaction(payment);
+            }
+        }
         paymentRepository.save(payment);
         log.info("Edited payment was successfully!");
         return "Edited payment was successfully!";
