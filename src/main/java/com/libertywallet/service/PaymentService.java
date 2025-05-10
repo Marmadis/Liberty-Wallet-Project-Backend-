@@ -93,8 +93,8 @@ public class PaymentService {
                 payment.getCategory().setType(CategoryType.INCOME);
                 createTransaction(payment);
             }else{
-                payment.setCurrentNumberOfMonths(paymentDto.getCurrentNumberOfMonths());
-                payment.setDate(payment.getDate().plusMonths(result));
+                payment.setCurrentNumberOfMonths(paymentDto.getCurrentNumberOfMonths()+1);
+                payment.setDate(payment.getDate().plusMonths(1));
                 payment.getCategory().setType(CategoryType.EXPENSE);
                 createTransaction(payment);
             }
