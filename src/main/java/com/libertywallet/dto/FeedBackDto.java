@@ -7,6 +7,6 @@ import java.util.UUID;
 @Data
 public class FeedBackDto {
     UUID recommendationId;
-    Boolean liked;
-    Boolean favorite;
+    boolean liked;
+    boolean favorite;
 }
