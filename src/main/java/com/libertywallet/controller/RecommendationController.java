@@ -46,8 +46,8 @@ public class RecommendationController {
     @PostMapping("/feedback/{userId}")
     public void giveFeedback(@PathVariable UUID userId,@RequestBody FeedBackDto feedBackRequest){
         UUID recommendationId = feedBackRequest.getRecommendationId();
-        Boolean liked = feedBackRequest.getLiked();
-        Boolean favorite = feedBackRequest.getFavorite();
+        boolean liked = feedBackRequest.getLiked();
+        boolean favorite = feedBackRequest.getFavorite();
         recommendationService.giveFeedBack(userId,recommendationId,favorite,liked);
     }
 }
