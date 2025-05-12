@@ -22,6 +22,9 @@ public class Recommendation {
 
 
     @Column
+    private String title;
+
+    @Column
     private String image;
 
     @Column(nullable = false,columnDefinition = "TEXT")

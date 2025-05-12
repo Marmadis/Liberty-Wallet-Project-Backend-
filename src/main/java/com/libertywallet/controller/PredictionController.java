@@ -19,5 +19,7 @@ public class PredictionController {
     public ResponseEntity<Double> getForecast(@PathVariable UUID userId){
         return ResponseEntity.ok(forecastService.forecastNextMonthExpenses(userId));
     }
+
+
 }
 

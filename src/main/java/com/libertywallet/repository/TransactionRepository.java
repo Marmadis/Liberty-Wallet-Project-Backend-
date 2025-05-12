@@ -22,5 +22,13 @@ public interface TransactionRepository extends JpaRepository<Transaction,UUID> {
     """, nativeQuery = true)
     List<Object[]> getRawMonthlyExpenses(@Param("userId") UUID userId);
 
-
+    @Query(value = "SELECT " +
+            "DATE_TRUNC('month', t.date) AS month_year, " +
+            "SUM(t.amount) AS total_expenses " +
+            "FROM transactions t " +
+            "JOIN categories c ON t.category_id = c.id " +
+            "WHERE c.type = 'EXPENSE' AND t.user_id = :userId " +
+            "GROUP BY month_year " +
+            "ORDER BY month_year", nativeQuery = true)
+    List<Object[]> getAllMonthSumExpenses(@Param("userId") UUID userId);
 }
