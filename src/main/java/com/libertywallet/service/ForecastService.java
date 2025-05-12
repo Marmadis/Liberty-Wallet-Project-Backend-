@@ -9,9 +9,14 @@ import lombok.extern.slf4j.Slf4j;
 import smile.timeseries.ARMA;
 import org.springframework.stereotype.Service;
 
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+
+
+
 
 @Slf4j
 @RequiredArgsConstructor
@@ -32,7 +37,7 @@ public class ForecastService {
         for (Object[] row : monthSum) {
             ForecastDto dto = new ForecastDto();
 
-            dto.setDate(((java.sql.Timestamp) row[0]).toLocalDateTime().toLocalDate());
+            dto.setDate(((java.time.Instant) row[0]).atZone(java.time.ZoneId.systemDefault()).toLocalDate());
             dto.setSum(((Number) row[1]).intValue());
 
             forecastDtos.add(dto);
@@ -40,44 +45,55 @@ public class ForecastService {
 
         return  forecastDtos;
     }
-
     public double forecastNextMonthExpenses(UUID userId) {
         List<Object[]> rawData = transactionRepository.getRawMonthlyExpenses(userId);
 
         if (rawData.isEmpty()) {
-            throw new IllegalStateException("No spending data");
-        } else if (rawData.size() == 1) {
-            log.info("Due to insufficient information, we are returning only the first month.");
-            return ((Number) rawData.get(0)[1]).doubleValue();
-        } else if (rawData.size() == 2) {
-            log.info("Due to insufficient information, we return the average value of the last two months.");
-            double month1 = ((Number) rawData.get(0)[1]).doubleValue();
-            double month2 = ((Number) rawData.get(1)[1]).doubleValue();
-            return (month1 + month2) / 2;
+            throw new IllegalStateException("No spending data available for forecasting.");
         }
-
 
         double[] expenses = rawData.stream()
                 .mapToDouble(row -> ((Number) row[1]).doubleValue())
                 .toArray();
 
+        int dataSize = expenses.length;
+
+        // 1 месяц — просто возвращаем как есть
+        if (dataSize == 1) {
+            log.info("Only 1 month available — returning that value.");
+            return expenses[0];
+        }
+
+        // 2 месяца — берём среднее
+        if (dataSize == 2) {
+            log.info("2 months available — using simple average.");
+            return (expenses[0] + expenses[1]) / 2;
+        }
+
+        // 3 месяца — берём среднее последних 3
+        if (dataSize == 3) {
+            log.info("3 months available — using average of last 3 months.");
+            return (expenses[0] + expenses[1] + expenses[2]) / 3;
+        }
+
+        // 4+ месяцев — используем ARMA
         try {
-            // Преобразуем в стационарный ряд (разностное преобразование)
             double[] diffSeries = difference(expenses);
 
-            // Обучаем модель ARMA(1,1)
-            ARMA model = ARMA.fit(diffSeries, 1, 1);
+            if (diffSeries.length < 3) {
+                log.warn("After differencing, not enough data for ARMA — fallback to last 3-month average.");
+                return Arrays.stream(expenses).skip(Math.max(0, dataSize - 3)).average().orElse(expenses[dataSize - 1]);
+            }
 
-            // Прогнозируем следующий элемент
+            ARMA model = ARMA.fit(diffSeries, 1, 1);
             double forecastDiff = model.forecast(1)[0];
 
-            // Возвращаем к исходному масштабу
             return expenses[expenses.length - 1] + forecastDiff;
         } catch (Exception e) {
-            throw new RuntimeException("ARMA forecast error", e);
+            log.error("ARMA forecast failed — fallback to average of last 3 months.", e);
+            return Arrays.stream(expenses).skip(Math.max(0, dataSize - 3)).average().orElse(expenses[dataSize - 1]);
         }
     }
-
     private double[] difference(double[] series) {
         double[] diff = new double[series.length - 1];
         for (int i = 1; i < series.length; i++) {
@@ -85,4 +101,5 @@ public class ForecastService {
         }
         return diff;
     }
+
 }

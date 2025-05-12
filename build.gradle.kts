@@ -24,6 +24,7 @@ repositories {
 }
 
 dependencies {
+	implementation("xalan:xalan:2.7.2")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
